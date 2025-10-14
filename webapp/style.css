@@ -1,0 +1,121 @@
+body {
+  background-color: #4d4d4d;
+  font-family: 'Kode Mono', monospace;
+  color: #f2f1ef;
+}
+
+/* Main "Algoritmos" button */
+.menu {
+  background-color: #787878;
+  font-size: 20pt;
+  color: #050709;
+  width: 80%;
+  border-radius: 40px;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.topBtn {
+  margin-bottom: 2%;
+}
+
+.menu:hover {
+  background-color: #8a8a8a;
+  cursor: pointer;
+}
+
+/* Submenu panel */
+.submenu {
+  font-size: 15pt;
+  background-color: #363636;
+  color: #f2f1ef;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  width: 80%;
+  margin-left: 16%;
+  margin-top: 0;
+  border-radius: 0 0 25px 25px;
+  padding: 10px 12px;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+/* Hidden state */
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+/* Visible state */
+.visible {
+  display: block;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* Submenu items */
+.submenu p {
+  cursor: pointer;
+  transition: background 0.2s;
+  padding-left: 8px;
+  margin-bottom: 0;
+}
+
+.submenu p:hover {
+  background-color: #303030;
+  border-radius: 6px;
+}
+
+/* Main content area */
+.main-area {
+  background-color: #787878;
+  border-radius: 40px;
+  padding: 0.5px;
+}
+
+.langTabs {
+  background-color: #363636;
+  color: #f2f1ef;
+  border-radius: 40px;
+  margin: 2%;
+  padding: 5px;
+}
+
+.langBtn {
+  background-color: #787878;
+  font-size: 20pt;
+  color: #050709;
+  width: 80%;
+  border-radius: 40px;
+  border: none;
+  transition: all 0.2s ease;
+  margin: 5px;
+}
+
+.code-container {
+  background-color: #5c5c5c;
+  color: #f2f1ef;
+  border-radius: 40px;
+  margin: 2%;
+  
+}
+
+.code-block {
+  display: inline-block;
+  margin: 2px;
+}
+
+.active {
+  font-weight: bold;
+  font-size: 17pt;
+}
+
+.active-btn {
+  font-weight: bolder;
+  font-size: 25pt;
+}
+
+.highlight {
+  color: #98FB98;
+  font-weight: bold;
+}
