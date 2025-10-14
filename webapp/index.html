@@ -60,25 +60,34 @@
             <!-- Main area // Ins. directa -->
             <div id="insDirContent" class="mb-9 hidden">
                 <h1 class="text-center mb-4">Inserción directa</h1>
-                <div class="d-flex flex-row justify-content-center">
+                <div class="d-flex flex-row justify-content-center align-items-center">
                     <div id="codeContentInsDir" class="code-container mb-6"></div>
                     
-                    <div id="values" class="counter mb-6 justify-content-center"
-                        <div id="iValue" class="counter mb-1">
-                            <p class="data">i</p>
-                            
-                            <svg width="300" height="150" style="background-color: #363636; border-radius: 10px;">
-                            <text x="50%" y="50%" 
+                    <div id="values" class="counter mb-6 justify-content-center">
+                        <div id="iValue" class="counter mb-1 justify-content-center">
+                            <svg width="150" height="150" style="background-color: #1e4d2a; border-radius: 30px;">
+                                <!-- "i" label at the top -->
+                                <text x="50%" y="25%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
-                                    fill="#f2f1ef" 
-                                    font-size="20" 
-                                    font-family="sans-serif">
-                                Centered Text
-                            </text>
+                                    fill="#98fb98" 
+                                    font-size="30" 
+                                    font-family="Kode Mono, monospace">
+                                i
+                                </text>
+
+                                <!-- Value text in the center -->
+                                <text x="50%" y="65%" 
+                                    dominant-baseline="middle" 
+                                    text-anchor="middle" 
+                                    fill="#98fb98" 
+                                    font-size="30" 
+                                    font-family="Kode Mono, monospace" 
+                                    id="iValueText">
+                                null
+                                </text>
                             </svg>
                         </div>
-
                     </div>
                 </div>
             </div>
