@@ -105,6 +105,12 @@ body {
   margin: 2px;
 }
 
+pre code {
+    font-family: 'Kode mono', monospace; /* You can use any font */
+    font-size: 16px;                     /* Adjust size */
+    line-height: 1.5;                    /* Optional: improves readability */
+}
+
 .active {
   font-weight: bold;
   font-size: 17pt;
