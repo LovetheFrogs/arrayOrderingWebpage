@@ -15,6 +15,8 @@
 
       <!-- Sidebar -->
       <div class="col-3 d-flex flex-column align-items-start">
+
+        <!-- Hidden buttons -->
         <button id="explainAlgo" class="menu topBtn p-3 rounded-pill text-center fw-bold align-items-center hidden">
           Explicación
         </button>
@@ -23,6 +25,7 @@
           Añadir valores
         </button>
 
+        <!-- Collapsible menu -->
         <button class="menu p-3 rounded-pill text-center fw-bold align-items-center"
                 data-bs-toggle="collapse"
                 data-bs-target="#algoritmosMenu"
@@ -31,7 +34,6 @@
           Algoritmos
         </button>
 
-        <!-- Submenu wrapper for width stability -->
         <div class="submenu-wrapper">
           <div class="collapse" id="algoritmosMenu">
             <div class="submenu p-3">
@@ -46,6 +48,8 @@
       <!-- Main content -->
       <div class="col-9">
         <div id="mainArea" class="main-area h-100 w-100">
+
+            <!-- Language tabs -->
             <div id="langTabs" class="langTabs rounded-pill d-flex justify-content-center mb-9 hidden">
                 <button id="pascalBtn" class="menu langBtn p-3 rounded-pill text-center fw-bold align-items-center">
                     Pascal
@@ -57,15 +61,19 @@
                     Python
                 </button>
             </div>
+
             <!-- Main area // Ins. directa -->
             <div id="insDirContent" class="mb-9 hidden">
                 <div class="d-flex flex-row justify-content-center align-items-center">
+
+                    <!-- Code display area -->
                     <div id="codeContentInsDir" class="code-container mb-6"></div>
                     
+                    <!-- i, j, aux badges display area -->
                     <div id="values" class="counter mb-6 d-flex justify-content-center gap-3">
                         <div id="iValue" class="counter mb-1 justify-content-center">
                             <svg width="150" height="150" style="background-color: #1e4d2a; border-radius: 30px;">
-                                <!-- "i" label at the top -->
+                                <!-- Label -->
                                 <text x="50%" y="25%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
@@ -75,7 +83,7 @@
                                 i
                                 </text>
 
-                                <!-- Value text in the center -->
+                                <!-- Value text -->
                                 <text x="50%" y="65%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
@@ -90,7 +98,7 @@
 
                         <div id="jValue" class="counter mb-1 justify-content-center">
                             <svg width="150" height="150" style="background-color: #221e4d; border-radius: 30px;">
-                                <!-- "i" label at the top -->
+                                <!-- Label -->
                                 <text x="50%" y="25%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
@@ -100,7 +108,7 @@
                                 j
                                 </text>
 
-                                <!-- Value text in the center -->
+                                <!-- Value text -->
                                 <text x="50%" y="65%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
@@ -115,7 +123,7 @@
 
                         <div id="auxValue" class="counter mb-1 justify-content-center">
                             <svg width="150" height="150" style="background-color: #4d1e1e; border-radius: 30px;">
-                                <!-- "i" label at the top -->
+                                <!-- Label-->
                                 <text x="50%" y="25%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
@@ -125,7 +133,7 @@
                                 aux
                                 </text>
 
-                                <!-- Value text in the center -->
+                                <!-- Value text -->
                                 <text x="50%" y="65%" 
                                     dominant-baseline="middle" 
                                     text-anchor="middle" 
@@ -140,6 +148,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Main area // Int. directo -->
 
             <!-- Main area // Sel. directa -->
