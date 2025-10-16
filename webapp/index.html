@@ -33,7 +33,6 @@
                 aria-controls="algoritmosMenu">
           Algoritmos
         </button>
-
         <div class="submenu-wrapper">
           <div class="collapse" id="algoritmosMenu">
             <div class="submenu p-3">
@@ -43,6 +42,33 @@
             </div>
           </div>
         </div>
+
+        <!-- Bottom progress bar -->
+        <div id="bottomBar" class="d-flex flex-column align-items-start justify-content-center px-3 py-2 mt-auto w-100 hidden">
+          <p id="stepCounter" class="m-0 mb-2">Paso 0/47</p>
+
+          <div class="d-flex align-items-center gap-4 mb-2">
+            <!-- Previous Button -->
+            <svg class="player-btn flip" id="prevBtn" viewBox="0 -2 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>Atrás</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-144.000000, -3805.000000)" fill="#f2f1ef"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M99.684,3649.69353 L95.207,3652.82453 C94.571,3653.25353 94,3652.84553 94,3652.13153 L94,3650.14053 L89.78,3652.82453 C89.145,3653.25353 88,3652.84553 88,3652.13153 L88,3645.86853 C88,3645.15453 89.145,3644.74653 89.78,3645.17453 L94,3647.85953 L94,3645.86853 C94,3645.15453 94.571,3644.74653 95.207,3645.17453 L99.516,3648.30653 C100.03,3648.65353 100.198,3649.34653 99.684,3649.69353"> </path> </g> </g> </g> </g></svg>
+
+            <!-- Play Button -->
+            <svg class="player-btn" id="playBtn" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>Play</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#f2f1ef"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322"> </path> </g> </g> </g> </g></svg>
+
+            <!-- Next Button -->
+            <svg class="player-btn" id="nextBtn" viewBox="0 -2 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>Siguiente</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-144.000000, -3805.000000)" fill="#f2f1ef"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M99.684,3649.69353 L95.207,3652.82453 C94.571,3653.25353 94,3652.84553 94,3652.13153 L94,3650.14053 L89.78,3652.82453 C89.145,3653.25353 88,3652.84553 88,3652.13153 L88,3645.86853 C88,3645.15453 89.145,3644.74653 89.78,3645.17453 L94,3647.85953 L94,3645.86853 C94,3645.15453 94.571,3644.74653 95.207,3645.17453 L99.516,3648.30653 C100.03,3648.65353 100.198,3649.34653 99.684,3649.69353"> </path> </g> </g> </g> </g></svg>
+          </div>
+
+
+
+          <!-- Progress bar -->
+          <div class="progress w-100" style="height: 15px; border-radius: 10px; background-color: #bfbfbf;">
+            <div id="progressFill" class="progress-bar" style="width: 0%; background-color: #363636; border-radius: 10px;"></div>
+          </div>
+
+          <!-- Percentage -->
+          <p id="progressPercent" class="m-0 mt-2 align-self-start">0%</p>
+        </div>
+
       </div>
 
       <!-- Main content -->
@@ -116,7 +142,7 @@
                                     font-size="30" 
                                     font-family="Kode Mono, monospace" 
                                     id="jValueText">
-                                null
+                                &#8203;
                                 </text>
                             </svg>
                         </div>
@@ -141,12 +167,42 @@
                                     font-size="30" 
                                     font-family="Kode Mono, monospace" 
                                     id="auxValueText">
-                                null
+                                &#8203;
                                 </text>
                             </svg>
                         </div>
                     </div>
                 </div>
+
+                <!-- Initial array -->
+                <div id="initialArray" class="arrays text-center">
+                  <p class="arrayText">Array inicial</p>
+                  <div class="arrayRow mb-2 rounded-pill d-flex justify-content-center align-items-center">
+                    <p id="initialArrayData" class="arrayData w-100 text-center m-0"></p>
+                  </div>
+                </div>
+
+                <!-- Operations array -->
+                <div id="operationsArray" class="arrays text-center">
+                  <p class="arrayText">Array v</p>
+                  <div class="arrayRow operations mb-2 rounded-pill d-flex justify-content-center align-items-center">
+                    <p id="opArrayData" class="arrayData w-100 text-center m-0"></p>
+                  </div>
+                </div>
+
+                <!-- Final array -->
+                <div id="finalArray" class="arrays text-center">
+                  <p class="arrayText">Array final</p>
+                  <div class="arrayRow mb-2 rounded-pill d-flex justify-content-center align-items-center">
+                    <p id="finalArrayData" class="arrayData w-100 text-center m-0"></p>
+                  </div>
+                </div>
+
+            </div>
+
+            <!-- Main area // Ins. directa (explained) -->
+            <div id="insDirExplainedContent" class="mb-9 hidden">
+              <h1>Sample text</h1>
             </div>
 
             <!-- Main area // Int. directo -->
@@ -154,7 +210,6 @@
             <!-- Main area // Sel. directa -->
         </div>
       </div>
-
     </div>
   </div>
 
