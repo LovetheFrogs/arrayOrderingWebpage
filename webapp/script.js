@@ -2,6 +2,8 @@
 
 
 // Global variables
+let opt = -1; // To know which algorithm is active
+
 const setArrayData = [5, -1, 8, 3, 7, 0, 4];
 
 const explainAlgo = document.getElementById('explainAlgo');
@@ -26,6 +28,7 @@ const initialArrayData = document.getElementById('initialArrayData');
 const operationsArrayData = document.getElementById('opArrayData');
 const finalArrayData = document.getElementById('finalArrayData');
 
+const backBtn = document.getElementById('backBtn');
 
 // Adding values functionality
 addValues.addEventListener('click', () => {
@@ -33,10 +36,14 @@ addValues.addEventListener('click', () => {
 });
 
 // Insertion sort main area
-inserDirBtn.addEventListener('click', () => {
+function showInsDir() {
     algoItems.forEach(item => item.classList.remove('active'));
     document.getElementById('insDirExplainedContent').classList.add('hidden');
     inserDirBtn.classList.add('active');
+
+    if (document.getElementById('insDirExplainedContent').classList.contains('positioning')) {
+        document.getElementById('insDirExplainedContent').classList.remove('positioning'); 
+    }
 
     explainAlgo.classList.remove('hidden');
     addValues.classList.remove('hidden');
@@ -73,18 +80,31 @@ inserDirBtn.addEventListener('click', () => {
     document.getElementById("bottomBar").classList.remove("hidden");
     document.getElementById('progressFill').style.width = '0%';
     document.getElementById('progressPercent').innerText = '0%';
-});
+}
+
+inserDirBtn.addEventListener('click', showInsDir);
 
 // Explain algorithm functionality (checks what algorithm is active)
 explainAlgo.addEventListener('click', () => {
-    let opt = -1;
+    opt = -1;
     if (inserDirBtn.classList.contains('active')) {
         opt = 0;
         insDirContent.classList.add('hidden');
         langTabs.classList.add('hidden');
         document.getElementById('insDirExplainedContent').classList.remove('hidden'); 
+        document.getElementById('insDirExplainedContent').classList.add('positioning'); 
+        document.getElementById("bottomBar").classList.add("hidden");
     };
 
+});
+
+// Back button functionality
+backBtn.addEventListener('click', () => {
+    if (opt === 0)  { // Insertion sort
+        document.getElementById('insDirExplainedContent').classList.add('hidden');
+        document.getElementById('insDirExplainedContent').classList.remove('positioning'); 
+        showInsDir();
+    }
 });
 
 // Language buttons functionality
@@ -151,7 +171,7 @@ cBtn.addEventListener('click', () => {
     currLine.classList.add('highlight');
 });
 
-//
+// Function to print array as string with " | " separator
 function printArray(array) {
     let res = "";
     for (let i = 0; i < array.length; i++) {
