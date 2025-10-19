@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+  <div class="container-fluid vh-100 d-flex align-items-start justify-content-center">
     <div class="row w-100 h-100 p-4">
 
       <!-- Sidebar -->
@@ -117,7 +117,7 @@
                                     font-size="30" 
                                     font-family="Kode Mono, monospace" 
                                     id="iValueText">
-                                null
+                                &#8203;
                                 </text>
                             </svg>
                         </div>
@@ -201,8 +201,33 @@
             </div>
 
             <!-- Main area // Ins. directa (explained) -->
-            <div id="insDirExplainedContent" class="mb-9 hidden">
-              <h1>Sample text</h1>
+            <div id="insDirExplainedContent" class="mb-9 d-flex justify-content-center hidden">
+              <section id="insercionDirectaExplained" class="algorithmSection">
+                <h2 class="algorithmTitle">Algoritmo: Inserción Directa</h2>
+                <p class="algorithmDescription">
+                  El <strong>algoritmo de Inserción Directa</strong> (o <em>Insertion Sort</em>) ordena una lista
+                  construyendo una sublista ordenada elemento a elemento. En cada iteración, el algoritmo toma un elemento
+                  del arreglo desordenado y lo inserta en la posición correcta dentro de la parte ya ordenada.
+                </p>
+                <ol class="algorithmSteps">
+                  <li>Comienza desde el segundo elemento del arreglo.</li>
+                  <li>Toma el valor actual como <strong>aux</strong>.</li>
+                  <li>Desplaza los elementos mayores que <strong>aux</strong> una posición a la derecha.</li>
+                  <li>Inserta <strong>aux</strong> en su posición correcta.</li>
+                  <li>Repite el proceso hasta ordenar toda la lista.</li>
+                </ol>
+                <p class="algorithmExtra">
+                  <strong>Ventajas:</strong> sencillo, eficaz en listas pequeñas.<br>
+                  <strong>Desventajas:</strong> complejidad temporal O(n²) en el peor caso.
+                </p>
+              </section>
+
+              <!-- Back button -->
+              <button id="backBtn" class="backBtn" title="Volver">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#050709" class="backIcon">
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+              </button>
             </div>
 
             <!-- Main area // Int. directo -->
