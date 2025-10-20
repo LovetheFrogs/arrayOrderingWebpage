@@ -39,7 +39,3 @@ function insertionSort(v) {
 
     return steps;
 }
-
-const arr = [5, -1, 8, 3, 7, 0, 4];
-const steps = insertionSort(arr);
-console.log(steps);
