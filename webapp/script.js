@@ -5,7 +5,13 @@ const setArrayData = [5, -1, 8, 3, 7, 0, 4];
 let steps = [];
 let currStep = 0;
 let lineIdx = null;
+let isPlaying = false;
+let playInterval = null;
 
+const playSVG = "M8 4 L8 28 C8 28 8.5 28.5 9 28.5 L25 16 C25 16 25 15.5 25 15 L9 3.5 C8.5 4 8 4 8 4 Z";
+const pauseSVG = "M8 4 H14 C14.828 4 15.5 4.672 15.5 5.5 V26.5 C15.5 27.328 14.828 28 14 28 H8 C7.172 28 6.5 27.328 6.5 26.5 V5.5 C6.5 4.672 7.172 4 8 4 Z M18 4 H24 C24.828 4 25.5 4.672 25.5 5.5 V26.5 C25.5 27.328 24.828 28 24 28 H18 C17.172 28 16.5 27.328 16.5 26.5 V5.5 C16.5 4.672 17.172 4 18 4 Z";
+
+// DOM elements
 const explainAlgo = document.getElementById('explainAlgo');
 const addValues = document.getElementById('addValues');
 
@@ -33,6 +39,7 @@ const finalArrayData = document.getElementById('finalArrayData');
 
 const prevBtn = document.getElementById('prevBtn');
 const playBtn = document.getElementById('playBtn');
+const playerShape = document.getElementById('playerShape');
 const nextBtn = document.getElementById('nextBtn');
 
 const backBtn = document.getElementById('backBtn');
@@ -125,7 +132,7 @@ function showContent(index) {
     finalArrayData.innerText = "\u200B";
 
     document.getElementById("bottomBar").classList.remove("hidden");
-    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length}`;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
     document.getElementById('progressFill').style.width = '0%';
     document.getElementById('progressPercent').innerText = '0%';
 }
@@ -217,6 +224,15 @@ pascalBtn.addEventListener('click', () => {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     pascalBtn.classList.add('active-btn');
 
+    currStep = 0;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPercent').innerText = '0%';
+
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
+
     if (opt === 0) {
         code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
@@ -277,6 +293,15 @@ pythonBtn.addEventListener('click', () => {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     pythonBtn.classList.add('active-btn');
 
+    currStep = 0;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPercent').innerText = '0%';
+
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
+
     if (opt === 0) {
         code.innerHTML = `<pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1">for i in range(1, ULTIMO + 1):</span>
@@ -320,6 +345,15 @@ pythonBtn.addEventListener('click', () => {
 cBtn.addEventListener('click', () => {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     cBtn.classList.add('active-btn');
+
+    currStep = 0;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPercent').innerText = '0%';
+
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
 
     if (opt === 0) {
         code.innerHTML = `
@@ -373,35 +407,111 @@ cBtn.addEventListener('click', () => {
     lineIdx = 1
 });
 
-// Step navigation functionality
-nextBtn.addEventListener('click', () => {
-    if (currStep >= steps.length - 1) {
-        finalArrayData.innerText = printArray(steps[steps.length - 1].arrState);
+function animateStep(stepIndex) {
+    const step = steps[stepIndex];
+
+    animateValueChange("iValueText", step.iVal);
+    animateValueChange("jValueText", step.jVal);
+    animateValueChange("auxValueText", step.auxVal);
+
+    document.getElementById(`line${lineIdx}`).classList.remove('highlight');
+    document.getElementById(`line${step.line}`).classList.add('highlight');
+    lineIdx = step.line;
+
+    const progress = (stepIndex / (steps.length - 1)) * 100;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+    document.getElementById('progressPercent').innerText = `${Math.round(progress)}%`;
+    document.getElementById("stepCounter").innerText = `Paso ${stepIndex}/${steps.length - 1}`;
+
+    operationsArrayData.innerHTML = printArray(step.arrState, step.iPos, step.jPos);
+    updateArrayDisplay(step.arrState, step.iPos, step.jPos);
+
+    if (stepIndex === steps.length - 1) {
+        finalArrayData.innerHTML = printArray(steps[steps.length - 1].arrState);
+
+        finalArrayData.classList.remove("smallZoomAnim");
+        void finalArrayData.offsetWidth;
+        finalArrayData.classList.add("smallZoomAnim");
+    } else {
+        finalArrayData.textContent = "\u200B";
     }
-    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
-    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
-    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";    document.getElementById(`line${lineIdx}`).classList.remove('highlight');
-    
-    document.getElementById(`line${steps[currStep].line}`).classList.add('highlight');
-    lineIdx = steps[currStep].line;
+}
 
-    document.getElementById('progressFill').style.width = `${((currStep + 1) / steps.length) * 100}%`;
-    document.getElementById('progressPercent').innerText = `${Math.round(((currStep + 1) / steps.length) * 100)}%`;
-    document.getElementById("stepCounter").innerText = `Paso ${currStep + 1}/${steps.length}`;
+// "Enable" or "disable" SVG buttons
+function setSVGButtonsEnabled(enabled) {
+  const value = enabled ? 'auto' : 'none';
+  prevBtn.style.pointerEvents = value;
+  nextBtn.style.pointerEvents = value;
 
-    operationsArrayData.innerHTML = printArray(steps[currStep].arrState, steps[currStep].iPos, steps[currStep].jPos);
+  // Optional visual cue
+  prevBtn.style.opacity = enabled ? '1' : '0.5';
+  nextBtn.style.opacity = enabled ? '1' : '0.5';
+}
 
+// Next button
+nextBtn.addEventListener('click', () => {
+    if (currStep >= steps.length - 1) return;
     currStep++;
+    animateStep(currStep);
 });
+
+// Previous button
+prevBtn.addEventListener('click', () => {
+    if (currStep === 0) return;
+    currStep--;
+    animateStep(currStep);
+});
+
+// Play/Pause button
+function togglePlay() {
+    if (!isPlaying) {
+        currStep = 0;
+        animateStep(currStep);
+        isPlaying = true;
+        setSVGButtonsEnabled(false);
+        playerShape.setAttribute("d", pauseSVG);
+        playInterval = setInterval(() => {
+        if (currStep < steps.length - 1) {
+            currStep++;
+            animateStep(currStep);
+        } else {
+            stopPlayback();
+        }
+        }, 1500);
+    } else {
+        stopPlayback();
+    }
+}
+
+function stopPlayback() {
+    clearInterval(playInterval);
+    playInterval = null;
+    isPlaying = false;
+    playerShape.setAttribute("d", playSVG);
+    setSVGButtonsEnabled(true);
+}
+
+playBtn.addEventListener('click', togglePlay);
+
+// Function to animate value changes
+function animateValueChange(elementId, newValue) {
+    const el = document.getElementById(elementId);
+
+    el.textContent = newValue !== null ? newValue : "\u200B";
+
+    const newEl = el.cloneNode(true);
+    el.parentNode.replaceChild(newEl, el);
+    newEl.classList.add('valuePulse');
+}
 
 // Function to print array as string with " | " separator and color highlighting.
 function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
     let res = "";
     for (let i = 0; i < array.length; i++) {
         if (i === highlightIndex) {
-            res += `<span style="color: #1E4D2A; font-weight: bold;">${array[i]}</span>`;
+            res += `<span class="highlightArray" style="color: #1E4D2A; font-weight: bold;">${array[i]}</span>`;
         } else if (i === highlightJIndex) {
-            res += `<span style="color: #221E4D; font-weight: bold;">${array[i]}</span>`;
+            res += `<span class="highlightArray" style="color: #221E4D; font-weight: bold;">${array[i]}</span>`;
         } else {
             res += array[i];
         }
@@ -411,6 +521,21 @@ function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
         }
     }
     return res;
+}
+
+// Function to update array display with animation reset
+function updateArrayDisplay(array, highlightIndex, highlightJIndex) {
+    const operationsArrayData = document.getElementById("opArrayData");
+    operationsArrayData.innerHTML = printArray(array, highlightIndex, highlightJIndex);
+
+    requestAnimationFrame(() => {
+        const highlights = operationsArrayData.querySelectorAll(".highlightArray");
+        highlights.forEach(el => {
+            el.style.animation = "none";
+            el.offsetHeight;
+            el.style.animation = null;
+        });
+    });
 }
 
 // Resets main area contents
