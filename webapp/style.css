@@ -66,6 +66,7 @@ body {
 .hidden {
   display: none;
   opacity: 0;
+  pointer-events: none;
 }
 
 .visible {
@@ -212,7 +213,7 @@ pre code {
   transform: scale(1.15);
 }
 
-#insDirExplainedContent {
+#explanation {
   top: 2vmin;
   left: 50%;
   transform: translateX(-50%);
