@@ -200,7 +200,6 @@ explainAlgo.addEventListener('click', showExplanation);
 
 // Back button functionality
 backBtn.addEventListener('click', () => {
-    explanation.classList.add('hidden');
     explanation.classList.remove('positioning');
     showContent(opt);
 });
@@ -382,6 +381,9 @@ function clearMainArea() {
     langTabs.classList.add('hidden');
     content.classList.add('hidden');
 
+    if (explanation.classList.contains('hidden') === false) {
+        explanationBlock.innerHTML = "";
+    }
 
-    document.getElementById('explanation').classList.add('hidden');
+    explanation.classList.add('hidden');
 }
