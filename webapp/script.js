@@ -38,7 +38,7 @@ addValues.addEventListener('click', () => {
 });
 
 // Show main content
-function showContent(index) {
+function showContent(index) {        
     clearMainArea();
 
     algoItems.forEach(item => item.classList.remove('active'));
@@ -54,22 +54,6 @@ function showContent(index) {
     if (opt === 0) {
         inserDirBtn.classList.add('active');
         code.innerHTML = `
-        <pre><code id="codeContentIntDir" class="code-block justify-content-center">
-<span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
-<span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
-<span id="line3">         IF v[j] > v[j+1] THEN </span>
-<span id="line4">         BEGIN </span>
-<span id="line5">           aux := v[j]; </span>
-<span id="line6">           v[j] := v[j+1]; </span>
-<span id="line7">           v[j+1] := aux; </span>
-<span id="line8">        END; {IF} </span>
-<span id="line9">    END; {FOR} </span>
-<span id="line10"> END // FOR </span>
-        </code></pre>`;
-    }
-    else if (opt === 1) {
-        intrDirBtn.classList.add('active');
-        code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
 <span id="line2"> BEGIN </span>
@@ -83,10 +67,43 @@ function showContent(index) {
 <span id="line10">     v[j+1] := aux; </span>
 <span id="line11"> END // FOR </span>
         </code></pre>`;
-    }
-    else if (opt === 2) {
+    } else if (opt === 1) {
+        intrDirBtn.classList.add('active');
+        code.innerHTML = `
+        <pre><code id="codeContentIntDir" class="code-block justify-content-center">
+<span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
+<span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
+<span id="line3">         IF v[j] > v[j+1] THEN </span>
+<span id="line4">         BEGIN </span>
+<span id="line5">           aux := v[j]; </span>
+<span id="line6">           v[j] := v[j+1]; </span>
+<span id="line7">           v[j+1] := aux; </span>
+<span id="line8">        END; {IF} </span>
+<span id="line9">    END; {FOR} </span>
+<span id="line10"> END // FOR </span>
+        </code></pre>`;
+    } else if (opt === 2) {
         selDirBtn.classList.add('active');
-        alert("Funcionalidad no implementada aún.");
+        code.innerHTML = `
+        <pre><code id="codeContentSelDir" class="code-block justify-content-center">
+<span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
+<span id="line2"> BEGIN </span>
+<span id="line3">     valMenor := v[i]; </span>
+<span id="line4">     posMenor := i; </span>
+<span id="line5">     FOR j := succ(i) TO ULTIMO DO </span>
+<span id="line6">         IF v[j] < valMenor THEN </span>
+<span id="line7">         BEGIN </span>
+<span id="line8">             valMenor := v[j]; </span>
+<span id="line9">             posMenor := j; </span>
+<span id="line10">         END; {IF} </span>
+<span id="line11">     IF posMenor <> i THEN </span>
+<span id="line12">     BEGIN </span>
+<span id="line13">         v[posMenor] := v[i]; </span>
+<span id="line14">         v[i] := valMenor; </span>
+<span id="line15">     END; {IF} </span>
+<span id="line16"> END; {FOR i} </span>
+        </code></pre>
+        `;
     }
 
     initialArrayData.innerText = printArray(setArrayData);
@@ -137,7 +154,45 @@ function showExplanation() {
             <strong>Desventajas:</strong> complejidad temporal O(n²) en el peor caso.
             </p>
         `;
-    };
+    } else if (opt === 1) { // Bubble sort
+        explanationBlock.innerHTML = `
+            <h2 class="algorithmTitle">Algoritmo: Intercambio Directo</h2>
+            <p class="algorithmDescription">
+            El <strong>algoritmo de Intercambio Directo</strong> (o <em>Bubble Sort</em>) ordena una lista comparando elementos adyacentes
+            y permutándolos si están en el orden incorrecto. Este proceso se repite hasta que toda la lista queda ordenada.
+            </p>
+            <ol class="algorithmSteps">
+                <li>Comienza desde el primer elemento del arreglo.</li>
+                <li>Compara cada par de elementos adyacentes.</li>
+                <li>Si el elemento de la izquierda es mayor que el de la derecha, intercámbialos.</li>
+                <li>Continúa comparando y moviendo los elementos hasta llegar al final del arreglo.</li>
+                <li>Repite todo el proceso tantas veces como sea necesario hasta que no se realicen más intercambios.</li>
+            </ol>
+            <p class="algorithmExtra">
+            <strong>Ventajas:</strong> sencillo, fácil de implementar, útil para listas pequeñas o casi ordenadas.<br>
+            <strong>Desventajas:</strong> ineficiente para listas grandes, complejidad temporal O(n²) en el peor caso.
+            </p>
+        `;
+    } else if (opt === 2) { // Selection sort
+        explanationBlock.innerHTML = `
+            <h2 class="algorithmTitle">Algoritmo: Selección Directa</h2>
+            <p class="algorithmDescription">
+            El <strong>algoritmo de Selección Directa</strong> (o <em>Selection Sort</em>) ordena una lista encontrando
+            el elemento mínimo en la parte no ordenada del arreglo y colocándolo en la posición correcta. Este proceso
+            se repite hasta que toda la lista queda ordenada.
+            </p>
+            <ol class="algorithmSteps">
+                <li>Comienza desde el primer elemento del arreglo.</li>
+                <li>Busca el elemento más pequeño en la porción restante del arreglo.</li>
+                <li>Intercambia el elemento mínimo encontrado con el primer elemento de la porción no ordenada.</li>
+                <li>Avanza un índice y repite el proceso hasta recorrer todo el arreglo.</li>
+            </ol>
+            <p class="algorithmExtra">
+            <strong>Ventajas:</strong> sencillo y fácil de implementar; realiza a lo sumo n-1 intercambios.<br>
+            <strong>Desventajas:</strong> ineficiente para listas grandes, complejidad temporal O(n²) en el peor caso.
+            </p>
+        `;
+    }
 }
 
 // Explanation selection functionality
@@ -170,9 +225,7 @@ pascalBtn.addEventListener('click', () => {
 <span id="line10">     v[j+1] := aux; </span>
 <span id="line11"> END // FOR </span>
         </code></pre>`;
-    }
-
-    else if (opt === 1) {
+    } else if (opt === 1) {
         code.innerHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
@@ -186,6 +239,27 @@ pascalBtn.addEventListener('click', () => {
 <span id="line9">    END; {FOR} </span>
 <span id="line10"> END // FOR </span>
         </code></pre>`;
+    } else if (opt === 2) {
+        code.innerHTML = `
+        <pre><code id="codeContentSelDir" class="code-block justify-content-center">
+<span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
+<span id="line2"> BEGIN </span>
+<span id="line3">     valMenor := v[i]; </span>
+<span id="line4">     posMenor := i; </span>
+<span id="line5">     FOR j := succ(i) TO ULTIMO DO </span>
+<span id="line6">         IF v[j] < valMenor THEN </span>
+<span id="line7">         BEGIN </span>
+<span id="line8">             valMenor := v[j]; </span>
+<span id="line9">             posMenor := j; </span>
+<span id="line10">         END; {IF} </span>
+<span id="line11">     IF posMenor <> i THEN </span>
+<span id="line12">     BEGIN </span>
+<span id="line13">         v[posMenor] := v[i]; </span>
+<span id="line14">         v[i] := valMenor; </span>
+<span id="line15">     END; {IF} </span>
+<span id="line16"> END; {FOR i} </span>
+        </code></pre>
+        `;
     }
 
     currLine = document.getElementById('line1');
@@ -206,9 +280,7 @@ pythonBtn.addEventListener('click', () => {
 <span id="line6">        j -= 1</span>
 <span id="line7">    v[j + 1] = aux</span>
         </code></pre>`;
-    }
-
-    else if (opt === 1) {
+    } else if (opt === 1) {
         code.innerHTML = `<pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> for i in range(0, len(v) - 1): </span>
 <span id="line2">     for j in range(0, len(v) - 1 - i): </span>
@@ -216,6 +288,20 @@ pythonBtn.addEventListener('click', () => {
 <span id="line4">             aux = v[j] </span>
 <span id="line5">             v[j] = v[j + 1] </span>
 <span id="line6">             v[j + 1] = aux </span>
+        </code></pre>`;
+    } else if (opt === 2) {
+        code.innerHTML = `
+        <pre><code id="codeContentSelDir" class="code-block justify-content-center">
+<span id="line1">for i in range(primero, ultimo): </span>
+<span id="line2">    val_menor = v[i] </span>
+<span id="line3">    pos_menor = i </span>
+<span id="line4">    for j in range(i+1, ultimo+1): </span>
+<span id="line5">        if v[j] &lt; val_menor: </span>
+<span id="line6">            val_menor = v[j] </span>
+<span id="line7">            pos_menor = j </span>
+<span id="line8">    if pos_menor != i: </span>
+<span id="line9">        v[pos_menor] = v[i] </span>
+<span id="line10">        v[i] = val_menor </span>
         </code></pre>`;
     }
 
@@ -241,9 +327,7 @@ cBtn.addEventListener('click', () => {
 <span id="line9">    v[j + 1] = aux;</span>
 <span id="line10">}</span>
         </code></pre>`;
-    }
-
-    else if (opt === 1) {
+    } else if (opt === 1) {
         code.innerHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> for (int i = 0; i &lt; ULTIMO; i++) { </span>
@@ -256,9 +340,26 @@ cBtn.addEventListener('click', () => {
 <span id="line8">     } </span>
 <span id="line9"> } </span>
         </code></pre>`;
+    } else if (opt === 2) {
+        code.innerHTML = `
+        <pre><code id="codeContentSelDir" class="code-block justify-content-center">
+<span id="line1">for (int i = primero; i < ultimo; i++) { </span>
+<span id="line2">    int valMenor = v[i]; </span>
+<span id="line3">    int posMenor = i; </span>
+<span id="line4">    for (int j = i+1; j <= ultimo; j++) { </span>
+<span id="line5">        if (v[j] < valMenor) { </span>
+<span id="line6">            valMenor = v[j]; </span>
+<span id="line7">            posMenor = j; </span>
+<span id="line8">        } </span>
+<span id="line9">    } </span>
+<span id="line10">    if (posMenor != i) { </span>
+<span id="line11">        v[posMenor] = v[i]; </span>
+<span id="line12">        v[i] = valMenor; </span>
+<span id="line13">    } </span>
+<span id="line14">} </span>
+        </code></pre>`;
     }
         
-
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
 });
