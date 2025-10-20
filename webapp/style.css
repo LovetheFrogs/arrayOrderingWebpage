@@ -97,6 +97,31 @@ body {
   border-radius: 4vmin;
   padding: 0.1vmin;
   box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 4vmin;
+    padding-right: 0.5vmin;
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 4vmin;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #5c5c5c;
+    border-radius: 4vmin;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #363636;
+    border-radius: 4vmin;
 }
 
 .langTabs {

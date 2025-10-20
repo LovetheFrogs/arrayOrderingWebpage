@@ -85,109 +85,111 @@
                 </div>
 
                 <!-- Main area -->
-                <div id="content" class="mb-9 hidden">
-                    <div class="d-flex flex-row justify-content-center align-items-center">
-                        <!-- Code display area -->
-                        <div id="codeContainer" class="code-container mb-6"></div>
-                        
-                        <!-- i, j, aux badges display area -->
-                        <div id="values" class="counter mb-6 d-flex justify-content-center gap-3">
-                            <div id="iValue" class="counter mb-1 justify-content-center">
-                                <svg width="150" height="150" style="background-color: #1e4d2a; border-radius: 30px;">
-                                    <!-- Label -->
-                                    <text x="50%" y="25%" 
-                                        dominant-baseline="middle" 
-                                        text-anchor="middle" 
-                                        fill="#98fb98" 
-                                        font-size="30" 
-                                        font-family="Kode Mono, monospace">
-                                    i
-                                    </text>
+                <div id="scrollContainer" class="scroll-container d-flex flex-column h-100">
+                    <div id="content" class="mb-9 hidden">
+                        <div class="d-flex flex-row justify-content-center align-items-center">
+                            <!-- Code display area -->
+                            <div id="codeContainer" class="code-container mb-6"></div>
+                            
+                            <!-- i, j, aux badges display area -->
+                            <div id="values" class="counter mb-6 d-flex justify-content-center gap-3">
+                                <div id="iValue" class="counter mb-1 justify-content-center">
+                                    <svg width="150" height="150" style="background-color: #1e4d2a; border-radius: 30px;">
+                                        <!-- Label -->
+                                        <text x="50%" y="25%" 
+                                            dominant-baseline="middle" 
+                                            text-anchor="middle" 
+                                            fill="#98fb98" 
+                                            font-size="30" 
+                                            font-family="Kode Mono, monospace">
+                                        i
+                                        </text>
 
-                                    <!-- Value text -->
-                                    <text x="50%" y="65%" 
-                                        dominant-baseline="middle" 
-                                        text-anchor="middle" 
-                                        fill="#98fb98" 
-                                        font-size="30" 
-                                        font-family="Kode Mono, monospace" 
-                                        id="iValueText">
-                                    &#8203;
-                                    </text>
-                                </svg>
-                            </div>
+                                        <!-- Value text -->
+                                        <text x="50%" y="65%" 
+                                            dominant-baseline="middle" 
+                                            text-anchor="middle" 
+                                            fill="#98fb98" 
+                                            font-size="30" 
+                                            font-family="Kode Mono, monospace" 
+                                            id="iValueText">
+                                        &#8203;
+                                        </text>
+                                    </svg>
+                                </div>
 
-                            <div id="jValue" class="counter mb-1 justify-content-center">
-                                <svg width="150" height="150" style="background-color: #221e4d; border-radius: 30px;">
-                                    <!-- Label -->
-                                    <text x="50%" y="25%" 
-                                        dominant-baseline="middle" 
-                                        text-anchor="middle" 
-                                        fill="#00ced1" 
-                                        font-size="30" 
-                                        font-family="Kode Mono, monospace">
-                                    j
-                                    </text>
-                                    <!-- Value text -->
-                                    <text x="50%" y="65%" 
-                                        dominant-baseline="middle" 
-                                        text-anchor="middle" 
-                                        fill="#00ced1" 
-                                        font-size="30" 
-                                        font-family="Kode Mono, monospace" 
-                                        id="jValueText">
-                                    &#8203;
-                                    </text>
-                                </svg>
-                            </div>
-                            <div id="auxValue" class="counter mb-1 justify-content-center">
-                                <svg width="150" height="150" style="background-color: #4d1e1e; border-radius: 30px;">
-                                    <!-- Label-->
-                                    <text x="50%" y="25%" 
-                                        dominant-baseline="middle" 
-                                        text-anchor="middle" 
-                                        fill="#f4b350" 
-                                        font-size="30" 
-                                        font-family="Kode Mono, monospace">
-                                    aux
-                                    </text>
+                                <div id="jValue" class="counter mb-1 justify-content-center">
+                                    <svg width="150" height="150" style="background-color: #221e4d; border-radius: 30px;">
+                                        <!-- Label -->
+                                        <text x="50%" y="25%" 
+                                            dominant-baseline="middle" 
+                                            text-anchor="middle" 
+                                            fill="#00ced1" 
+                                            font-size="30" 
+                                            font-family="Kode Mono, monospace">
+                                        j
+                                        </text>
+                                        <!-- Value text -->
+                                        <text x="50%" y="65%" 
+                                            dominant-baseline="middle" 
+                                            text-anchor="middle" 
+                                            fill="#00ced1" 
+                                            font-size="30" 
+                                            font-family="Kode Mono, monospace" 
+                                            id="jValueText">
+                                        &#8203;
+                                        </text>
+                                    </svg>
+                                </div>
+                                <div id="auxValue" class="counter mb-1 justify-content-center">
+                                    <svg width="150" height="150" style="background-color: #4d1e1e; border-radius: 30px;">
+                                        <!-- Label-->
+                                        <text x="50%" y="25%" 
+                                            dominant-baseline="middle" 
+                                            text-anchor="middle" 
+                                            fill="#f4b350" 
+                                            font-size="30" 
+                                            font-family="Kode Mono, monospace">
+                                        aux
+                                        </text>
 
-                                    <!-- Value text -->
-                                    <text x="50%" y="65%" 
-                                        dominant-baseline="middle" 
-                                        text-anchor="middle" 
-                                        fill="#f4b350" 
-                                        font-size="30" 
-                                        font-family="Kode Mono, monospace" 
-                                        id="auxValueText">
-                                    &#8203;
-                                    </text>
-                                </svg>
+                                        <!-- Value text -->
+                                        <text x="50%" y="65%" 
+                                            dominant-baseline="middle" 
+                                            text-anchor="middle" 
+                                            fill="#f4b350" 
+                                            font-size="30" 
+                                            font-family="Kode Mono, monospace" 
+                                            id="auxValueText">
+                                        &#8203;
+                                        </text>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Initial array -->
-                    <div id="initialArray" class="arrays text-center">
-                        <p class="arrayText">Array inicial</p>
-                        <div class="arrayRow mb-2 rounded-pill d-flex justify-content-center align-items-center">
-                            <p id="initialArrayData" class="arrayData w-100 text-center m-0"></p>
+                        <!-- Initial array -->
+                        <div id="initialArray" class="arrays text-center">
+                            <p class="arrayText">Array inicial</p>
+                            <div class="arrayRow mb-2 rounded-pill d-flex justify-content-center align-items-center">
+                                <p id="initialArrayData" class="arrayData w-100 text-center m-0"></p>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Operations array -->
-                    <div id="operationsArray" class="arrays text-center">
-                        <p class="arrayText">Array v</p>
-                        <div class="arrayRow operations mb-2 rounded-pill d-flex justify-content-center align-items-center">
-                            <p id="opArrayData" class="arrayData w-100 text-center m-0"></p>
+                        <!-- Operations array -->
+                        <div id="operationsArray" class="arrays text-center">
+                            <p class="arrayText">Array v</p>
+                            <div class="arrayRow operations mb-2 rounded-pill d-flex justify-content-center align-items-center">
+                                <p id="opArrayData" class="arrayData w-100 text-center m-0"></p>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Final array -->
-                    <div id="finalArray" class="arrays text-center">
-                        <p class="arrayText">Array final</p>
-                        <div class="arrayRow mb-2 rounded-pill d-flex justify-content-center align-items-center">
-                            <p id="finalArrayData" class="arrayData w-100 text-center m-0"></p>
+                        <!-- Final array -->
+                        <div id="finalArray" class="arrays text-center">
+                            <p class="arrayText">Array final</p>
+                            <div class="arrayRow mb-2 rounded-pill d-flex justify-content-center align-items-center">
+                                <p id="finalArrayData" class="arrayData w-100 text-center m-0"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
