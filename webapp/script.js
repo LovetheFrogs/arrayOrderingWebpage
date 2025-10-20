@@ -1,9 +1,10 @@
-// Set step to 0 if language is changed (i.e. restart).
-
 // Global variables
 let opt = -1; // To know which algorithm is active
 
 const setArrayData = [5, -1, 8, 3, 7, 0, 4];
+let steps = [];
+let currStep = 0;
+let lineIdx = null;
 
 const explainAlgo = document.getElementById('explainAlgo');
 const addValues = document.getElementById('addValues');
@@ -30,6 +31,10 @@ const initialArrayData = document.getElementById('initialArrayData');
 const operationsArrayData = document.getElementById('opArrayData');
 const finalArrayData = document.getElementById('finalArrayData');
 
+const prevBtn = document.getElementById('prevBtn');
+const playBtn = document.getElementById('playBtn');
+const nextBtn = document.getElementById('nextBtn');
+
 const backBtn = document.getElementById('backBtn');
 
 // Adding values functionality
@@ -41,6 +46,7 @@ addValues.addEventListener('click', () => {
 function showContent(index) {        
     clearMainArea();
 
+    currStep = 0
     algoItems.forEach(item => item.classList.remove('active'));
     explainAlgo.classList.remove('hidden');
     addValues.classList.remove('hidden');
@@ -52,6 +58,7 @@ function showContent(index) {
 
     opt = index;
     if (opt === 0) {
+        steps = insertionSort([...setArrayData]);
         inserDirBtn.classList.add('active');
         code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
@@ -111,12 +118,14 @@ function showContent(index) {
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 
-    initialArrayData.innerText = printArray(setArrayData);
-    operationsArrayData.innerText = printArray(setArrayData);
+    initialArrayData.innerHTML = printArray(setArrayData);
+    operationsArrayData.innerHTML = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
 
     document.getElementById("bottomBar").classList.remove("hidden");
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length}`;
     document.getElementById('progressFill').style.width = '0%';
     document.getElementById('progressPercent').innerText = '0%';
 }
@@ -261,6 +270,7 @@ pascalBtn.addEventListener('click', () => {
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 });
 
 pythonBtn.addEventListener('click', () => {
@@ -304,6 +314,7 @@ pythonBtn.addEventListener('click', () => {
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 });
 
 cBtn.addEventListener('click', () => {
@@ -359,13 +370,42 @@ cBtn.addEventListener('click', () => {
         
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 });
 
-// Function to print array as string with " | " separator
-function printArray(array) {
+// Step navigation functionality
+nextBtn.addEventListener('click', () => {
+    if (currStep >= steps.length - 1) {
+        finalArrayData.innerText = printArray(steps[steps.length - 1].arrState);
+    }
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";    document.getElementById(`line${lineIdx}`).classList.remove('highlight');
+    
+    document.getElementById(`line${steps[currStep].line}`).classList.add('highlight');
+    lineIdx = steps[currStep].line;
+
+    document.getElementById('progressFill').style.width = `${((currStep + 1) / steps.length) * 100}%`;
+    document.getElementById('progressPercent').innerText = `${Math.round(((currStep + 1) / steps.length) * 100)}%`;
+    document.getElementById("stepCounter").innerText = `Paso ${currStep + 1}/${steps.length}`;
+
+    operationsArrayData.innerHTML = printArray(steps[currStep].arrState, steps[currStep].iPos, steps[currStep].jPos);
+
+    currStep++;
+});
+
+// Function to print array as string with " | " separator and color highlighting.
+function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
     let res = "";
     for (let i = 0; i < array.length; i++) {
-        res += String(array[i]);
+        if (i === highlightIndex) {
+            res += `<span style="color: #1E4D2A; font-weight: bold;">${array[i]}</span>`;
+        } else if (i === highlightJIndex) {
+            res += `<span style="color: #221E4D; font-weight: bold;">${array[i]}</span>`;
+        } else {
+            res += array[i];
+        }
+
         if (i !== array.length - 1) {
             res += " | ";
         }
