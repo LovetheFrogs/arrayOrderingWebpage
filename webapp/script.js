@@ -56,16 +56,16 @@ function showContent(index) {
         code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     aux := v[i]; </span>
-<span id="line4">     j := pred(i); </span>
-<span id="line5">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
-<span id="line6">     BEGIN </span>
-<span id="line7">         v[j+1] := v[j]; </span>
-<span id="line8">         j := pred(j); </span>
-<span id="line9">     END; {WHILE} </span>
-<span id="line10">     v[j+1] := aux; </span>
-<span id="line11"> END // FOR </span>
+<span id="line0"> BEGIN </span>
+<span id="line2">     aux := v[i]; </span>
+<span id="line3">     j := pred(i); </span>
+<span id="line4">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
+<span id="line0">     BEGIN </span>
+<span id="line5">         v[j+1] := v[j]; </span>
+<span id="line6">         j := pred(j); </span>
+<span id="line0">     END; {WHILE} </span>
+<span id="line7">     v[j+1] := aux; </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 1) {
         intrDirBtn.classList.add('active');
@@ -74,36 +74,35 @@ function showContent(index) {
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
 <span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
 <span id="line3">         IF v[j] > v[j+1] THEN </span>
-<span id="line4">         BEGIN </span>
-<span id="line5">           aux := v[j]; </span>
-<span id="line6">           v[j] := v[j+1]; </span>
-<span id="line7">           v[j+1] := aux; </span>
-<span id="line8">        END; {IF} </span>
-<span id="line9">    END; {FOR} </span>
-<span id="line10"> END // FOR </span>
+<span id="line0">         BEGIN </span>
+<span id="line4">           aux := v[j]; </span>
+<span id="line5">           v[j] := v[j+1]; </span>
+<span id="line6">           v[j+1] := aux; </span>
+<span id="line0">        END; {IF} </span>
+<span id="line0">    END; {FOR} </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 2) {
         selDirBtn.classList.add('active');
         code.innerHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     valMenor := v[i]; </span>
-<span id="line4">     posMenor := i; </span>
-<span id="line5">     FOR j := succ(i) TO ULTIMO DO </span>
-<span id="line6">         IF v[j] < valMenor THEN </span>
-<span id="line7">         BEGIN </span>
-<span id="line8">             valMenor := v[j]; </span>
-<span id="line9">             posMenor := j; </span>
-<span id="line10">         END; {IF} </span>
-<span id="line11">     IF posMenor <> i THEN </span>
-<span id="line12">     BEGIN </span>
-<span id="line13">         v[posMenor] := v[i]; </span>
-<span id="line14">         v[i] := valMenor; </span>
-<span id="line15">     END; {IF} </span>
-<span id="line16"> END; {FOR i} </span>
-        </code></pre>
-        `;
+<span id="line0"> BEGIN </span>
+<span id="line2">     valMenor := v[i]; </span>
+<span id="line3">     posMenor := i; </span>
+<span id="line4">     FOR j := succ(i) TO ULTIMO DO </span>
+<span id="line5">         IF v[j] < valMenor THEN </span>
+<span id="line0">         BEGIN </span>
+<span id="line6">             valMenor := v[j]; </span>
+<span id="line7">             posMenor := j; </span>
+<span id="line0">         END; {IF} </span>
+<span id="line8">     IF posMenor <> i THEN </span>
+<span id="line0">     BEGIN </span>
+<span id="line9">         v[posMenor] := v[i]; </span>
+<span id="line10">         v[i] := valMenor; </span>
+<span id="line0">     END; {IF} </span>
+<span id="line0"> END; {FOR i} </span>
+        </code></pre>`;
     }
 
     initialArrayData.innerText = printArray(setArrayData);
@@ -213,16 +212,16 @@ pascalBtn.addEventListener('click', () => {
         code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     aux := v[i]; </span>
-<span id="line4">     j := pred(i); </span>
-<span id="line5">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
-<span id="line6">     BEGIN </span>
-<span id="line7">         v[j+1] := v[j]; </span>
-<span id="line8">         j := pred(j); </span>
-<span id="line9">     END; {WHILE} </span>
-<span id="line10">     v[j+1] := aux; </span>
-<span id="line11"> END // FOR </span>
+<span id="line0"> BEGIN </span>
+<span id="line2">     aux := v[i]; </span>
+<span id="line3">     j := pred(i); </span>
+<span id="line4">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
+<span id="line0">     BEGIN </span>
+<span id="line5">         v[j+1] := v[j]; </span>
+<span id="line6">         j := pred(j); </span>
+<span id="line0">     END; {WHILE} </span>
+<span id="line7">     v[j+1] := aux; </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 1) {
         code.innerHTML = `
@@ -230,35 +229,34 @@ pascalBtn.addEventListener('click', () => {
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
 <span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
 <span id="line3">         IF v[j] > v[j+1] THEN </span>
-<span id="line4">         BEGIN </span>
-<span id="line5">           aux := v[j]; </span>
-<span id="line6">           v[j] := v[j+1]; </span>
-<span id="line7">           v[j+1] := aux; </span>
-<span id="line8">        END; {IF} </span>
-<span id="line9">    END; {FOR} </span>
-<span id="line10"> END // FOR </span>
+<span id="line0">         BEGIN </span>
+<span id="line4">           aux := v[j]; </span>
+<span id="line5">           v[j] := v[j+1]; </span>
+<span id="line6">           v[j+1] := aux; </span>
+<span id="line0">        END; {IF} </span>
+<span id="line0">    END; {FOR} </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 2) {
         code.innerHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     valMenor := v[i]; </span>
-<span id="line4">     posMenor := i; </span>
-<span id="line5">     FOR j := succ(i) TO ULTIMO DO </span>
-<span id="line6">         IF v[j] < valMenor THEN </span>
-<span id="line7">         BEGIN </span>
-<span id="line8">             valMenor := v[j]; </span>
-<span id="line9">             posMenor := j; </span>
-<span id="line10">         END; {IF} </span>
-<span id="line11">     IF posMenor <> i THEN </span>
-<span id="line12">     BEGIN </span>
-<span id="line13">         v[posMenor] := v[i]; </span>
-<span id="line14">         v[i] := valMenor; </span>
-<span id="line15">     END; {IF} </span>
-<span id="line16"> END; {FOR i} </span>
-        </code></pre>
-        `;
+<span id="line0"> BEGIN </span>
+<span id="line2">     valMenor := v[i]; </span>
+<span id="line3">     posMenor := i; </span>
+<span id="line4">     FOR j := succ(i) TO ULTIMO DO </span>
+<span id="line5">         IF v[j] < valMenor THEN </span>
+<span id="line0">         BEGIN </span>
+<span id="line6">             valMenor := v[j]; </span>
+<span id="line7">             posMenor := j; </span>
+<span id="line0">         END; {IF} </span>
+<span id="line8">     IF posMenor <> i THEN </span>
+<span id="line0">     BEGIN </span>
+<span id="line9">         v[posMenor] := v[i]; </span>
+<span id="line10">         v[i] := valMenor; </span>
+<span id="line0">     END; {IF} </span>
+<span id="line0"> END; {FOR i} </span>
+        </code></pre>`;
     }
 
     currLine = document.getElementById('line1');
@@ -318,13 +316,13 @@ cBtn.addEventListener('click', () => {
 <span id="line1">for (int i = 1; i <= ULTIMO; i++) {</span>
 <span id="line2">    int aux = v[i];</span>
 <span id="line3">    int j = i - 1;</span>
-<span id="line4"></span>
-<span id="line5">    while (j >= 0 && v[j] > aux) {</span>
-<span id="line6">        v[j + 1] = v[j];</span>
-<span id="line7">        j--;</span>
-<span id="line8">    }</span>
-<span id="line9">    v[j + 1] = aux;</span>
-<span id="line10">}</span>
+<span id="line0"></span>
+<span id="line4">    while (j >= 0 && v[j] > aux) {</span>
+<span id="line5">        v[j + 1] = v[j];</span>
+<span id="line6">        j--;</span>
+<span id="line0">    }</span>
+<span id="line7">    v[j + 1] = aux;</span>
+<span id="line0">}</span>
         </code></pre>`;
     } else if (opt === 1) {
         code.innerHTML = `
@@ -335,9 +333,9 @@ cBtn.addEventListener('click', () => {
 <span id="line4">             int aux = v[j]; </span>
 <span id="line5">             v[j] = v[j + 1]; </span>
 <span id="line6">             v[j + 1] = aux; </span>
-<span id="line7">         } </span>
-<span id="line8">     } </span>
-<span id="line9"> } </span>
+<span id="line0">         } </span>
+<span id="line0">     } </span>
+<span id="line0"> } </span>
         </code></pre>`;
     } else if (opt === 2) {
         code.innerHTML = `
@@ -349,13 +347,13 @@ cBtn.addEventListener('click', () => {
 <span id="line5">        if (v[j] < valMenor) { </span>
 <span id="line6">            valMenor = v[j]; </span>
 <span id="line7">            posMenor = j; </span>
-<span id="line8">        } </span>
-<span id="line9">    } </span>
-<span id="line10">    if (posMenor != i) { </span>
-<span id="line11">        v[posMenor] = v[i]; </span>
-<span id="line12">        v[i] = valMenor; </span>
-<span id="line13">    } </span>
-<span id="line14">} </span>
+<span id="line0">        } </span>
+<span id="line0">    } </span>
+<span id="line8">    if (posMenor != i) { </span>
+<span id="line9">        v[posMenor] = v[i]; </span>
+<span id="line10">        v[i] = valMenor; </span>
+<span id="line0">    } </span>
+<span id="line0">} </span>
         </code></pre>`;
     }
         
