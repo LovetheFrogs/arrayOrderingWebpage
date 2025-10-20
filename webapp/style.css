@@ -1,0 +1,329 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: #4d4d4d;
+  font-family: 'Kode Mono', monospace;
+  color: #f2f1ef;
+}
+
+.container-fluid {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.row {
+  height: 100%;
+}
+
+.col-9 {
+  height: 100%;
+}
+
+.menu {
+  background-color: #787878;
+  font-size: 20pt;
+  color: #050709;
+  width: 80%;
+  border-radius: 4vmin;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.topBtn {
+  margin-bottom: 1.5vmin;
+}
+
+.menu:hover {
+  background-color: #8a8a8a;
+  cursor: pointer;
+}
+
+.flip-horizontal {
+  transform: scaleX(-1);
+}
+
+.submenu {
+  font-size: 1.7vminpt;
+  background-color: #363636;
+  color: #f2f1ef;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  width: 80%;
+  margin-left: 16%;
+  margin-top: 0;
+  border-radius: 0 0 3vmin 3vmin;
+  padding: 1vmin 1.2vmin;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.visible {
+  display: block;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.submenu p {
+  cursor: pointer;
+  transition: background 0.2s;
+  padding-left: 3vmin;
+  margin-bottom: 0;
+}
+
+.submenu p:hover {
+  background-color: #303030;
+  border-radius: 6vmin;
+}
+
+.main-area {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #787878;
+  border-radius: 4vmin;
+  padding: 0.1vmin;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 4vmin;
+    padding-right: 0.5vmin;
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 4vmin;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #5c5c5c;
+    border-radius: 4vmin;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #363636;
+    border-radius: 4vmin;
+}
+
+.langTabs {
+  background-color: #363636;
+  color: #f2f1ef;
+  border-radius: 4vmin;
+  margin: 2vmin;
+  padding: 0.5vmin;
+}
+
+.langBtn {
+  background-color: #787878;
+  font-size: 2vmin;
+  color: #050709;
+  border-radius: 4vmin;
+  border: none;
+  transition: all 0.2s ease;
+  margin: 1vmin;
+}
+
+.code-container {
+  background-color: #5c5c5c;
+  color: #f2f1ef;
+  border-radius: 3vmin;
+  margin-right: 2vmin;
+  margin-left: 2vmin;
+  padding: 1vmin;
+  display: inline-block;
+  max-width: 40vw;
+  max-height: 60vh;
+  overflow: auto;
+  flex-shrink: 0;
+}
+
+.code-block {
+  display: inline-block;
+  margin: 0px;
+}
+
+pre code {
+    font-family: 'Kode mono', monospace; 
+    font-size: 1.6vmin;                     
+    line-height: 1.5;                    
+}
+
+.counter svg {
+  width: 15vmin;
+  height: auto;
+  max-width: 20vmin;
+  border-radius: 3vmin;
+}
+
+.d-flex.flex-row.justify-content-center.align-items-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4vmin;
+}
+
+.arrayText {
+  font-size: 4vmin;
+  color: #050709;
+  font-weight: bold;
+}
+
+.arrayRow {
+  background-color: #5c5c5c;
+  color: #f2f1ef;
+  border-radius: 3vmin;
+  min-height: 6vmin;
+  margin: 0 auto 1.5vmin auto;
+  padding: 0.6vmin 1.2vmin;
+  width: 90%;
+}
+
+#values {
+  gap: 3vmin;
+  align-items: center;
+}
+
+.arrayData {
+  font-size: 3.5vmin;
+  margin: 0;
+  font-weight: bold;
+}
+
+.operations {
+  background-color: #FFD8B1;
+  color: #050709;
+}
+
+#bottomBar {
+  background-color: #4d4d4d;
+  border-radius: 20px;
+  color: #f2f1ef;
+  font-family: 'Kode Mono', monospace;
+  font-size: 1rem;
+}
+
+#stepCounter, #progressPercent {
+  font-size: 2vmin;
+}
+
+.player-btn {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 5vmin;
+  height: 5vmin;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.player-btn:hover {
+  transform: scale(1.15);
+}
+
+#explanation {
+  top: 2vmin;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+}
+
+.algorithmSection {
+  text-align: center;
+  padding-top: 1vmin;
+  margin: 2vmin auto;
+  max-width: 800px;
+}
+
+.algorithmTitle {
+  font-size: 3rem;
+  color: #050709;
+  margin-bottom: 2vmin;
+}
+
+.algorithmDescription {
+  color: #050709;
+  font-size: 1.5rem;
+  margin-bottom: 1vmin;
+  line-height: 1.6;
+}
+
+.algorithmSteps {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #050709;
+}
+
+.algorithmExtra {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: #050709;
+}
+
+.backBtn {
+  position: absolute;
+  bottom: 2vmin;
+  left: 2vmin;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.8vmin;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.backBtn:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.backIcon {
+  width: 5vmin;
+  height: 5vmin;
+  fill: #050709;
+}
+
+.flip {
+  transform: scaleX(-1);
+}
+
+.flip:hover {
+  transform: scaleX(-1) scale(1.15);
+}
+
+.active {
+  font-weight: bold;
+  font-size: 2vmin;
+}
+
+.active-btn {
+  font-weight: bolder;
+  font-size: 3vmin;
+}
+
+.highlight {
+  color: #98FB98;
+  font-weight: bold;
+}
+
+.positioning {
+  position: absolute;
+}
