@@ -348,6 +348,12 @@ pre code {
   animation: smallZoom 0.8s ease-in-out;
 }
 
+button:disabled,
+button[disabeled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 @keyframes smallZoom {
   0% {
     transform: scale(1);
