@@ -58,6 +58,7 @@ function showContent(index) {
     algoItems.forEach(item => item.classList.remove('active'));
     explainAlgo.classList.remove('hidden');
     addValues.classList.remove('hidden');
+    addValues.disabled = true;
 
     langTabs.classList.remove('hidden');
     pascalBtn.classList.add('active-btn');
@@ -83,6 +84,7 @@ function showContent(index) {
 <span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 1) {
+        steps = bubbleSort([...setArrayData]);
         intrDirBtn.classList.add('active');
         code.innerHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
@@ -98,6 +100,7 @@ function showContent(index) {
 <span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 2) {
+        steps = selectionSort([...setArrayData]);
         selDirBtn.classList.add('active');
         code.innerHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
@@ -118,6 +121,9 @@ function showContent(index) {
 <span id="line0">     END; {IF} </span>
 <span id="line0"> END; {FOR i} </span>
         </code></pre>`;
+
+        document.getElementById("auxLabel").textContent = "valMenor";
+        document.getElementById("auxLabel").setAttribute("font-size", "24");
     }
 
     initialArrayData.innerText = printArray(setArrayData);
@@ -444,7 +450,6 @@ function setSVGButtonsEnabled(enabled) {
   prevBtn.style.pointerEvents = value;
   nextBtn.style.pointerEvents = value;
 
-  // Optional visual cue
   prevBtn.style.opacity = enabled ? '1' : '0.5';
   nextBtn.style.opacity = enabled ? '1' : '0.5';
 }
@@ -547,6 +552,15 @@ function clearMainArea() {
 
     if (explanation.classList.contains('hidden') === false) {
         explanationBlock.innerHTML = "";
+    }
+
+    if (opt === 2) {
+        document.getElementById("auxLabel").textContent = "aux";
+        document.getElementById("auxLabel").setAttribute("font-size", "30");
+    }
+
+    if (isPlaying) {
+        stopPlayback();
     }
 
     explanation.classList.add('hidden');
