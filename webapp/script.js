@@ -1,10 +1,17 @@
-// Set step to 0 if language is changed (i.e. restart).
-
 // Global variables
 let opt = -1; // To know which algorithm is active
 
 const setArrayData = [5, -1, 8, 3, 7, 0, 4];
+let steps = [];
+let currStep = 0;
+let lineIdx = null;
+let isPlaying = false;
+let playInterval = null;
 
+const playSVG = "M8 4 L8 28 C8 28 8.5 28.5 9 28.5 L25 16 C25 16 25 15.5 25 15 L9 3.5 C8.5 4 8 4 8 4 Z";
+const pauseSVG = "M8 4 H14 C14.828 4 15.5 4.672 15.5 5.5 V26.5 C15.5 27.328 14.828 28 14 28 H8 C7.172 28 6.5 27.328 6.5 26.5 V5.5 C6.5 4.672 7.172 4 8 4 Z M18 4 H24 C24.828 4 25.5 4.672 25.5 5.5 V26.5 C25.5 27.328 24.828 28 24 28 H18 C17.172 28 16.5 27.328 16.5 26.5 V5.5 C16.5 4.672 17.172 4 18 4 Z";
+
+// DOM elements
 const explainAlgo = document.getElementById('explainAlgo');
 const addValues = document.getElementById('addValues');
 
@@ -30,6 +37,11 @@ const initialArrayData = document.getElementById('initialArrayData');
 const operationsArrayData = document.getElementById('opArrayData');
 const finalArrayData = document.getElementById('finalArrayData');
 
+const prevBtn = document.getElementById('prevBtn');
+const playBtn = document.getElementById('playBtn');
+const playerShape = document.getElementById('playerShape');
+const nextBtn = document.getElementById('nextBtn');
+
 const backBtn = document.getElementById('backBtn');
 
 // Adding values functionality
@@ -41,9 +53,12 @@ addValues.addEventListener('click', () => {
 function showContent(index) {        
     clearMainArea();
 
+    steps = [];
+    currStep = 0
     algoItems.forEach(item => item.classList.remove('active'));
     explainAlgo.classList.remove('hidden');
     addValues.classList.remove('hidden');
+    addValues.disabled = true;
 
     langTabs.classList.remove('hidden');
     pascalBtn.classList.add('active-btn');
@@ -52,58 +67,63 @@ function showContent(index) {
 
     opt = index;
     if (opt === 0) {
+        steps = insertionSort([...setArrayData]);
         inserDirBtn.classList.add('active');
         code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     aux := v[i]; </span>
-<span id="line4">     j := pred(i); </span>
-<span id="line5">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
-<span id="line6">     BEGIN </span>
-<span id="line7">         v[j+1] := v[j]; </span>
-<span id="line8">         j := pred(j); </span>
-<span id="line9">     END; {WHILE} </span>
-<span id="line10">     v[j+1] := aux; </span>
-<span id="line11"> END // FOR </span>
+<span id="line0"> BEGIN </span>
+<span id="line2">     aux := v[i]; </span>
+<span id="line3">     j := pred(i); </span>
+<span id="line4">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
+<span id="line0">     BEGIN </span>
+<span id="line5">         v[j+1] := v[j]; </span>
+<span id="line6">         j := pred(j); </span>
+<span id="line0">     END; {WHILE} </span>
+<span id="line7">     v[j+1] := aux; </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 1) {
+        steps = bubbleSort([...setArrayData]);
         intrDirBtn.classList.add('active');
         code.innerHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
 <span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
 <span id="line3">         IF v[j] > v[j+1] THEN </span>
-<span id="line4">         BEGIN </span>
-<span id="line5">           aux := v[j]; </span>
-<span id="line6">           v[j] := v[j+1]; </span>
-<span id="line7">           v[j+1] := aux; </span>
-<span id="line8">        END; {IF} </span>
-<span id="line9">    END; {FOR} </span>
-<span id="line10"> END // FOR </span>
+<span id="line0">         BEGIN </span>
+<span id="line4">           aux := v[j]; </span>
+<span id="line5">           v[j] := v[j+1]; </span>
+<span id="line6">           v[j+1] := aux; </span>
+<span id="line0">        END; {IF} </span>
+<span id="line0">    END; {FOR} </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 2) {
+        steps = selectionSort([...setArrayData]);
         selDirBtn.classList.add('active');
         code.innerHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     valMenor := v[i]; </span>
-<span id="line4">     posMenor := i; </span>
-<span id="line5">     FOR j := succ(i) TO ULTIMO DO </span>
-<span id="line6">         IF v[j] < valMenor THEN </span>
-<span id="line7">         BEGIN </span>
-<span id="line8">             valMenor := v[j]; </span>
-<span id="line9">             posMenor := j; </span>
-<span id="line10">         END; {IF} </span>
-<span id="line11">     IF posMenor <> i THEN </span>
-<span id="line12">     BEGIN </span>
-<span id="line13">         v[posMenor] := v[i]; </span>
-<span id="line14">         v[i] := valMenor; </span>
-<span id="line15">     END; {IF} </span>
-<span id="line16"> END; {FOR i} </span>
-        </code></pre>
-        `;
+<span id="line0"> BEGIN </span>
+<span id="line2">     valMenor := v[i]; </span>
+<span id="line3">     posMenor := i; </span>
+<span id="line4">     FOR j := succ(i) TO ULTIMO DO </span>
+<span id="line5">         IF v[j] < valMenor THEN </span>
+<span id="line0">         BEGIN </span>
+<span id="line6">             valMenor := v[j]; </span>
+<span id="line7">             posMenor := j; </span>
+<span id="line0">         END; {IF} </span>
+<span id="line8">     IF posMenor <> i THEN </span>
+<span id="line0">     BEGIN </span>
+<span id="line9">         v[posMenor] := v[i]; </span>
+<span id="line10">         v[i] := valMenor; </span>
+<span id="line0">     END; {IF} </span>
+<span id="line0"> END; {FOR i} </span>
+        </code></pre>`;
+
+        document.getElementById("auxLabel").textContent = "valMenor";
+        document.getElementById("auxLabel").setAttribute("font-size", "24");
     }
 
     initialArrayData.innerText = printArray(setArrayData);
@@ -112,12 +132,14 @@ function showContent(index) {
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 
-    initialArrayData.innerText = printArray(setArrayData);
-    operationsArrayData.innerText = printArray(setArrayData);
+    initialArrayData.innerHTML = printArray(setArrayData);
+    operationsArrayData.innerHTML = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
 
     document.getElementById("bottomBar").classList.remove("hidden");
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
     document.getElementById('progressFill').style.width = '0%';
     document.getElementById('progressPercent').innerText = '0%';
 }
@@ -209,20 +231,29 @@ pascalBtn.addEventListener('click', () => {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     pascalBtn.classList.add('active-btn');
 
+    currStep = 0;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPercent').innerText = '0%';
+
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
+
     if (opt === 0) {
         code.innerHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     aux := v[i]; </span>
-<span id="line4">     j := pred(i); </span>
-<span id="line5">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
-<span id="line6">     BEGIN </span>
-<span id="line7">         v[j+1] := v[j]; </span>
-<span id="line8">         j := pred(j); </span>
-<span id="line9">     END; {WHILE} </span>
-<span id="line10">     v[j+1] := aux; </span>
-<span id="line11"> END // FOR </span>
+<span id="line0"> BEGIN </span>
+<span id="line2">     aux := v[i]; </span>
+<span id="line3">     j := pred(i); </span>
+<span id="line4">     WHILE (j >= 0) AND (v[j] > aux) DO </span>
+<span id="line0">     BEGIN </span>
+<span id="line5">         v[j+1] := v[j]; </span>
+<span id="line6">         j := pred(j); </span>
+<span id="line0">     END; {WHILE} </span>
+<span id="line7">     v[j+1] := aux; </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 1) {
         code.innerHTML = `
@@ -230,44 +261,53 @@ pascalBtn.addEventListener('click', () => {
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
 <span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
 <span id="line3">         IF v[j] > v[j+1] THEN </span>
-<span id="line4">         BEGIN </span>
-<span id="line5">           aux := v[j]; </span>
-<span id="line6">           v[j] := v[j+1]; </span>
-<span id="line7">           v[j+1] := aux; </span>
-<span id="line8">        END; {IF} </span>
-<span id="line9">    END; {FOR} </span>
-<span id="line10"> END // FOR </span>
+<span id="line0">         BEGIN </span>
+<span id="line4">           aux := v[j]; </span>
+<span id="line5">           v[j] := v[j+1]; </span>
+<span id="line6">           v[j+1] := aux; </span>
+<span id="line0">        END; {IF} </span>
+<span id="line0">    END; {FOR} </span>
+<span id="line0"> END // FOR </span>
         </code></pre>`;
     } else if (opt === 2) {
         code.innerHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
-<span id="line2"> BEGIN </span>
-<span id="line3">     valMenor := v[i]; </span>
-<span id="line4">     posMenor := i; </span>
-<span id="line5">     FOR j := succ(i) TO ULTIMO DO </span>
-<span id="line6">         IF v[j] < valMenor THEN </span>
-<span id="line7">         BEGIN </span>
-<span id="line8">             valMenor := v[j]; </span>
-<span id="line9">             posMenor := j; </span>
-<span id="line10">         END; {IF} </span>
-<span id="line11">     IF posMenor <> i THEN </span>
-<span id="line12">     BEGIN </span>
-<span id="line13">         v[posMenor] := v[i]; </span>
-<span id="line14">         v[i] := valMenor; </span>
-<span id="line15">     END; {IF} </span>
-<span id="line16"> END; {FOR i} </span>
-        </code></pre>
-        `;
+<span id="line0"> BEGIN </span>
+<span id="line2">     valMenor := v[i]; </span>
+<span id="line3">     posMenor := i; </span>
+<span id="line4">     FOR j := succ(i) TO ULTIMO DO </span>
+<span id="line5">         IF v[j] < valMenor THEN </span>
+<span id="line0">         BEGIN </span>
+<span id="line6">             valMenor := v[j]; </span>
+<span id="line7">             posMenor := j; </span>
+<span id="line0">         END; {IF} </span>
+<span id="line8">     IF posMenor <> i THEN </span>
+<span id="line0">     BEGIN </span>
+<span id="line9">         v[posMenor] := v[i]; </span>
+<span id="line10">         v[i] := valMenor; </span>
+<span id="line0">     END; {IF} </span>
+<span id="line0"> END; {FOR i} </span>
+        </code></pre>`;
     }
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 });
 
 pythonBtn.addEventListener('click', () => {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     pythonBtn.classList.add('active-btn');
+
+    currStep = 0;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPercent').innerText = '0%';
+
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
 
     if (opt === 0) {
         code.innerHTML = `<pre><code id="codeContentInsDir" class="code-block justify-content-center">
@@ -306,11 +346,21 @@ pythonBtn.addEventListener('click', () => {
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 });
 
 cBtn.addEventListener('click', () => {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     cBtn.classList.add('active-btn');
+
+    currStep = 0;
+    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPercent').innerText = '0%';
+
+    document.getElementById("iValueText").textContent = steps[currStep].iVal !== null ? steps[currStep].iVal : "\u200B";
+    document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
+    document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
 
     if (opt === 0) {
         code.innerHTML = `
@@ -318,13 +368,13 @@ cBtn.addEventListener('click', () => {
 <span id="line1">for (int i = 1; i <= ULTIMO; i++) {</span>
 <span id="line2">    int aux = v[i];</span>
 <span id="line3">    int j = i - 1;</span>
-<span id="line4"></span>
-<span id="line5">    while (j >= 0 && v[j] > aux) {</span>
-<span id="line6">        v[j + 1] = v[j];</span>
-<span id="line7">        j--;</span>
-<span id="line8">    }</span>
-<span id="line9">    v[j + 1] = aux;</span>
-<span id="line10">}</span>
+<span id="line0"></span>
+<span id="line4">    while (j >= 0 && v[j] > aux) {</span>
+<span id="line5">        v[j + 1] = v[j];</span>
+<span id="line6">        j--;</span>
+<span id="line0">    }</span>
+<span id="line7">    v[j + 1] = aux;</span>
+<span id="line0">}</span>
         </code></pre>`;
     } else if (opt === 1) {
         code.innerHTML = `
@@ -335,9 +385,9 @@ cBtn.addEventListener('click', () => {
 <span id="line4">             int aux = v[j]; </span>
 <span id="line5">             v[j] = v[j + 1]; </span>
 <span id="line6">             v[j + 1] = aux; </span>
-<span id="line7">         } </span>
-<span id="line8">     } </span>
-<span id="line9"> } </span>
+<span id="line0">         } </span>
+<span id="line0">     } </span>
+<span id="line0"> } </span>
         </code></pre>`;
     } else if (opt === 2) {
         code.innerHTML = `
@@ -349,30 +399,149 @@ cBtn.addEventListener('click', () => {
 <span id="line5">        if (v[j] < valMenor) { </span>
 <span id="line6">            valMenor = v[j]; </span>
 <span id="line7">            posMenor = j; </span>
-<span id="line8">        } </span>
-<span id="line9">    } </span>
-<span id="line10">    if (posMenor != i) { </span>
-<span id="line11">        v[posMenor] = v[i]; </span>
-<span id="line12">        v[i] = valMenor; </span>
-<span id="line13">    } </span>
-<span id="line14">} </span>
+<span id="line0">        } </span>
+<span id="line0">    } </span>
+<span id="line8">    if (posMenor != i) { </span>
+<span id="line9">        v[posMenor] = v[i]; </span>
+<span id="line10">        v[i] = valMenor; </span>
+<span id="line0">    } </span>
+<span id="line0">} </span>
         </code></pre>`;
     }
         
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
+    lineIdx = 1
 });
 
-// Function to print array as string with " | " separator
-function printArray(array) {
+function animateStep(stepIndex) {
+    const step = steps[stepIndex];
+
+    animateValueChange("iValueText", step.iVal);
+    animateValueChange("jValueText", step.jVal);
+    animateValueChange("auxValueText", step.auxVal);
+
+    document.getElementById(`line${lineIdx}`).classList.remove('highlight');
+    document.getElementById(`line${step.line}`).classList.add('highlight');
+    lineIdx = step.line;
+
+    const progress = (stepIndex / (steps.length - 1)) * 100;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+    document.getElementById('progressPercent').innerText = `${Math.round(progress)}%`;
+    document.getElementById("stepCounter").innerText = `Paso ${stepIndex}/${steps.length - 1}`;
+
+    operationsArrayData.innerHTML = printArray(step.arrState, step.iVal, step.jVal);
+    updateArrayDisplay(step.arrState, step.iVal, step.jVal);
+
+    if (stepIndex === steps.length - 1) {
+        finalArrayData.innerHTML = printArray(steps[steps.length - 1].arrState);
+
+        finalArrayData.classList.remove("smallZoomAnim");
+        void finalArrayData.offsetWidth;
+        finalArrayData.classList.add("smallZoomAnim");
+    } else {
+        finalArrayData.textContent = "\u200B";
+    }
+}
+
+// "Enable" or "disable" SVG buttons
+function setSVGButtonsEnabled(enabled) {
+  const value = enabled ? 'auto' : 'none';
+  prevBtn.style.pointerEvents = value;
+  nextBtn.style.pointerEvents = value;
+
+  prevBtn.style.opacity = enabled ? '1' : '0.5';
+  nextBtn.style.opacity = enabled ? '1' : '0.5';
+}
+
+// Next button
+nextBtn.addEventListener('click', () => {
+    if (currStep >= steps.length - 1) return;
+    currStep++;
+    animateStep(currStep);
+});
+
+// Previous button
+prevBtn.addEventListener('click', () => {
+    if (currStep === 0) return;
+    currStep--;
+    animateStep(currStep);
+});
+
+// Play/Pause button
+function togglePlay() {
+    if (!isPlaying) {
+        currStep = 0;
+        animateStep(currStep);
+        isPlaying = true;
+        setSVGButtonsEnabled(false);
+        playerShape.setAttribute("d", pauseSVG);
+        playInterval = setInterval(() => {
+        if (currStep < steps.length - 1) {
+            currStep++;
+            animateStep(currStep);
+        } else {
+            stopPlayback();
+        }
+        }, 1500);
+    } else {
+        stopPlayback();
+    }
+}
+
+function stopPlayback() {
+    clearInterval(playInterval);
+    playInterval = null;
+    isPlaying = false;
+    playerShape.setAttribute("d", playSVG);
+    setSVGButtonsEnabled(true);
+}
+
+playBtn.addEventListener('click', togglePlay);
+
+// Function to animate value changes
+function animateValueChange(elementId, newValue) {
+    const el = document.getElementById(elementId);
+
+    el.textContent = newValue !== null ? newValue : "\u200B";
+
+    const newEl = el.cloneNode(true);
+    el.parentNode.replaceChild(newEl, el);
+    newEl.classList.add('valuePulse');
+}
+
+// Function to print array as string with " | " separator and color highlighting.
+function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
     let res = "";
     for (let i = 0; i < array.length; i++) {
-        res += String(array[i]);
+        if (i === highlightIndex) {
+            res += `<span class="highlightArray" style="color: #1E4D2A; font-weight: bold;">${array[i]}</span>`;
+        } else if (i === highlightJIndex) {
+            res += `<span class="highlightArray" style="color: #221E4D; font-weight: bold;">${array[i]}</span>`;
+        } else {
+            res += array[i];
+        }
+
         if (i !== array.length - 1) {
             res += " | ";
         }
     }
     return res;
+}
+
+// Function to update array display with animation reset
+function updateArrayDisplay(array, highlightIndex, highlightJIndex) {
+    const operationsArrayData = document.getElementById("opArrayData");
+    operationsArrayData.innerHTML = printArray(array, highlightIndex, highlightJIndex);
+
+    requestAnimationFrame(() => {
+        const highlights = operationsArrayData.querySelectorAll(".highlightArray");
+        highlights.forEach(el => {
+            el.style.animation = "none";
+            el.offsetHeight;
+            el.style.animation = null;
+        });
+    });
 }
 
 // Resets main area contents
@@ -383,6 +552,15 @@ function clearMainArea() {
 
     if (explanation.classList.contains('hidden') === false) {
         explanationBlock.innerHTML = "";
+    }
+
+    if (opt === 2) {
+        document.getElementById("auxLabel").textContent = "aux";
+        document.getElementById("auxLabel").setAttribute("font-size", "30");
+    }
+
+    if (isPlaying) {
+        stopPlayback();
     }
 
     explanation.classList.add('hidden');
