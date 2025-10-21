@@ -53,6 +53,7 @@ addValues.addEventListener('click', () => {
 function showContent(index) {        
     clearMainArea();
 
+    steps = [];
     currStep = 0
     algoItems.forEach(item => item.classList.remove('active'));
     explainAlgo.classList.remove('hidden');
@@ -423,8 +424,8 @@ function animateStep(stepIndex) {
     document.getElementById('progressPercent').innerText = `${Math.round(progress)}%`;
     document.getElementById("stepCounter").innerText = `Paso ${stepIndex}/${steps.length - 1}`;
 
-    operationsArrayData.innerHTML = printArray(step.arrState, step.iPos, step.jPos);
-    updateArrayDisplay(step.arrState, step.iPos, step.jPos);
+    operationsArrayData.innerHTML = printArray(step.arrState, step.iVal, step.jVal);
+    updateArrayDisplay(step.arrState, step.iVal, step.jVal);
 
     if (stepIndex === steps.length - 1) {
         finalArrayData.innerHTML = printArray(steps[steps.length - 1].arrState);
