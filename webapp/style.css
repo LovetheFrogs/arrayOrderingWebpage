@@ -210,7 +210,7 @@ pre code {
 }
 
 .operations {
-  background-color: #FFD8B1;
+  background-color: #6B4E71;
   color: #050709;
 }
 
@@ -331,6 +331,42 @@ pre code {
   display: inline-block;
   font-size: 4vmin;
   animation: zoomPulse 0.8s ease-in-out;
+}
+
+.arrayContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.arrayIndices {
+    font-size: 2.5vmin;
+    color: #666;
+    font-family: monospace;
+    letter-spacing: 0.35em;
+    margin-bottom: 0.2rem;
+}
+
+.arrayIndices p {
+    margin-bottom: 0 !important;
+}
+
+.arrayText {
+    margin-bottom: 0.3rem;
+}
+
+.highlightIndex {
+    display: inline-block;
+    font-weight: bold;
+    animation: zoomPulse 0.8s ease-in-out;
+}
+
+.highlightIndex.i-index {
+    color: #98fb98;
+}
+
+.highlightIndex.j-index {
+    color: #00ced1;
 }
 
 .positioning {
