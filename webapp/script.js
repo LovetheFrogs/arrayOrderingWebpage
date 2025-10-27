@@ -291,6 +291,10 @@ pascalBtn.addEventListener('click', () => {
         </code></pre>`;
     }
 
+    initialArrayData.innerText = printArray(setArrayData);
+    operationsArrayData.innerText = printArray(setArrayData);
+    finalArrayData.innerText = "\u200B";
+
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
     lineIdx = 1
@@ -343,6 +347,10 @@ pythonBtn.addEventListener('click', () => {
 <span id="line10">        v[i] = val_menor </span>
         </code></pre>`;
     }
+
+    initialArrayData.innerText = printArray(setArrayData);
+    operationsArrayData.innerText = printArray(setArrayData);
+    finalArrayData.innerText = "\u200B";
 
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
@@ -409,6 +417,10 @@ cBtn.addEventListener('click', () => {
         </code></pre>`;
     }
         
+    initialArrayData.innerText = printArray(setArrayData);
+    operationsArrayData.innerText = printArray(setArrayData);
+    finalArrayData.innerText = "\u200B";
+
     currLine = document.getElementById('line1');
     currLine.classList.add('highlight');
     lineIdx = 1
