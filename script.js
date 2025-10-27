@@ -513,30 +513,57 @@ function animateValueChange(elementId, newValue) {
 // Function to print array as string with " | " separator and color highlighting.
 function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
     let res = "";
+    let indicesRes = "";
+    
     for (let i = 0; i < array.length; i++) {
         if (i === highlightIndex) {
-            res += `<span class="highlightArray" style="color: #1E4D2A; font-weight: bold;">${array[i]}</span>`;
+            res += `<span class="highlightArray" style="color: #98fb98; font-weight: bold;">${array[i]}</span>`;
         } else if (i === highlightJIndex) {
-            res += `<span class="highlightArray" style="color: #221E4D; font-weight: bold;">${array[i]}</span>`;
+            res += `<span class="highlightArray" style="color: #00ced1; font-weight: bold;">${array[i]}</span>`;
         } else {
             res += array[i];
         }
 
+        if (i === highlightIndex) {
+            indicesRes += `<span class="highlightIndex i-index">${i}</span>`;
+        } else if (i === highlightJIndex) {
+            indicesRes += `<span class="highlightIndex j-index">${i}</span>`;
+        } else {
+            indicesRes += `<span>${i}</span>`;
+        }
+
         if (i !== array.length - 1) {
             res += " | ";
+            indicesRes += " | ";
         }
     }
+    
+    const indicesElement = document.getElementById("opArrayIndices");
+    if (indicesElement) {
+        indicesElement.innerHTML = indicesRes;
+    }
+    
     return res;
 }
 
 // Function to update array display with animation reset
 function updateArrayDisplay(array, highlightIndex, highlightJIndex) {
     const operationsArrayData = document.getElementById("opArrayData");
+    const operationsArrayIndices = document.getElementById("opArrayIndices");
+    
     operationsArrayData.innerHTML = printArray(array, highlightIndex, highlightJIndex);
 
     requestAnimationFrame(() => {
         const highlights = operationsArrayData.querySelectorAll(".highlightArray");
+        const indexHighlights = operationsArrayIndices.querySelectorAll(".highlightIndex");
+        
         highlights.forEach(el => {
+            el.style.animation = "none";
+            el.offsetHeight;
+            el.style.animation = null;
+        });
+        
+        indexHighlights.forEach(el => {
             el.style.animation = "none";
             el.offsetHeight;
             el.style.animation = null;
