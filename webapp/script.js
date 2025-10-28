@@ -51,6 +51,11 @@ const inputError = document.getElementById('inputError');
 const confirmValuesBtn = document.getElementById('confirmValuesBtn');
 const cancelValuesBtn = document.getElementById('cancelValuesBtn');
 
+// Initialize modal as hidden
+if (addValuesModal) {
+    addValuesModal.classList.add('hidden');
+}
+
 // Add values button
 addValues.addEventListener('click', () => {
     arrayInput.value = setArrayData.join(', ');

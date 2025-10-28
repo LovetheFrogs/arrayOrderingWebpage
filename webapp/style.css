@@ -610,3 +610,14 @@ button[disabeled] {
 .confirm-btn:hover .btn-icon.flip-horizontal {
   transform: scaleX(-1) scale(1.0);
 }
+
+.modal-overlay.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
