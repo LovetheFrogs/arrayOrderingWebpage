@@ -44,10 +44,126 @@ const nextBtn = document.getElementById('nextBtn');
 
 const backBtn = document.getElementById('backBtn');
 
-// Adding values functionality
+const addValuesModal = document.getElementById('addValuesModal');
+const arrayInput = document.getElementById('arrayInput');
+const previewArray = document.getElementById('previewArray');
+const inputError = document.getElementById('inputError');
+const confirmValuesBtn = document.getElementById('confirmValuesBtn');
+const cancelValuesBtn = document.getElementById('cancelValuesBtn');
+
+// Add values button
 addValues.addEventListener('click', () => {
-    alert("Funcionalidad no implementada aún.");
+    arrayInput.value = setArrayData.join(', ');
+    updatePreview();
+    addValuesModal.classList.remove('hidden');
+    arrayInput.focus();
 });
+
+// Cancel button
+cancelValuesBtn.addEventListener('click', () => {
+    addValuesModal.classList.add('hidden');
+    clearError();
+});
+
+// Close prompt when clicking outside
+addValuesModal.addEventListener('click', (e) => {
+    if (e.target === addValuesModal) {
+        addValuesModal.classList.add('hidden');
+        clearError();
+    }
+});
+
+// Update preview as user types
+arrayInput.addEventListener('input', updatePreview);
+
+// Confirm button
+confirmValuesBtn.addEventListener('click', () => {
+    const newArray = validateAndParseArray(arrayInput.value);
+    
+    if (newArray) {
+        setArrayData.splice(0, setArrayData.length, ...newArray);
+        addValuesModal.classList.add('hidden');
+        clearError();
+        
+        if (opt !== -1) {
+            showContent(opt);
+        }
+    }
+});
+
+// Validate values format
+function validateAndParseArray(input) {
+    clearError();
+    
+    const values = input.trim().split(',').map(v => v.trim()).filter(v => v !== '');
+    
+    if (values.length === 0) {
+        showError('Por favor, ingresa al menos un valor.');
+        return null;
+    }
+    
+    if (values.length < 3) {
+        showError('El array debe tener al menos 3 elementos.');
+        return null;
+    }
+    
+    if (values.length > 10) {
+        showError('El array no puede tener más de 1 elementos.');
+        return null;
+    }
+    
+    const parsedArray = [];
+    for (let i = 0; i < values.length; i++) {
+        const num = Number(values[i]);
+        
+        if (isNaN(num)) {
+            showError(`"${values[i]}" no es un número válido.`);
+            return null;
+        }
+        
+        if (!Number.isInteger(num)) {
+            showError('Solo se permiten números enteros.');
+            return null;
+        }
+        
+        parsedArray.push(num);
+    }
+    
+    return parsedArray;
+}
+
+// Update preview function
+function updatePreview() {
+    const input = arrayInput.value.trim();
+    
+    if (input === '') {
+        previewArray.innerHTML = '<span class="preview-placeholder">Los valores aparecerán aquí</span>';
+        return;
+    }
+    
+    const testArray = validateAndParseArray(input);
+    
+    if (testArray) {
+        previewArray.innerHTML = testArray.join(' | ');
+        previewArray.style.color = '#f2f1ef';
+    } else {
+        previewArray.innerHTML = '<span style="color: #ff6b6b;">Entrada inválida</span>';
+    }
+}
+
+// Show error message
+function showError(message) {
+    inputError.textContent = message;
+    inputError.classList.remove('hidden');
+    arrayInput.style.borderColor = '#ff6b6b';
+}
+
+// Clear error message
+function clearError() {
+    inputError.classList.add('hidden');
+    inputError.textContent = '';
+    arrayInput.style.borderColor = '#363636';
+}
 
 // Show main content
 function showContent(index) {        
@@ -58,7 +174,6 @@ function showContent(index) {
     algoItems.forEach(item => item.classList.remove('active'));
     explainAlgo.classList.remove('hidden');
     addValues.classList.remove('hidden');
-    addValues.disabled = true;
 
     langTabs.classList.remove('hidden');
     pascalBtn.classList.add('active-btn');
