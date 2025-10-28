@@ -1,0 +1,51 @@
+name: Sync to gh-pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'webapp/**/*.html'
+      - 'webapp/**/*.css'
+      - 'webapp/**/*.js'
+
+jobs:
+  sync-to-gh-pages:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Checkout gh-pages branch
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages
+
+      - name: Copy files from main branch webapp folder
+        run: |
+          git checkout main -- webapp/
+          
+      - name: Move files to root
+        run: |
+          # Move all files from webapp/ to root, overwriting existing files
+          cp -r webapp/* .
+          rm -rf webapp/
+          
+      - name: Commit and push changes
+        run: |
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-sync from main branch - $(date +'%Y-%m-%d %H:%M:%S')"
+            git push origin gh-pages
+          fi
