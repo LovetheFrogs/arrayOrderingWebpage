@@ -113,7 +113,7 @@ function validateAndParseArray(input) {
     }
     
     if (values.length > 10) {
-        showError('El array no puede tener más de 1 elementos.');
+        showError('El array no puede tener más de 10 elementos.');
         return null;
     }
     
