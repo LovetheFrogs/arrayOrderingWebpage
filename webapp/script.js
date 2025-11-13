@@ -648,7 +648,9 @@ function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
     let indicesRes = "";
     
     for (let i = 0; i < array.length; i++) {
-        if (i === highlightIndex) {
+        if (i === highlightIndex && i === highlightJIndex) {
+            res += `<span class="highlightArray" style="background: linear-gradient(to right, #98fb98 50%, #00ced1 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: bold;">${array[i]}</span>`;
+        } else if (i === highlightIndex) {
             res += `<span class="highlightArray" style="color: #98fb98; font-weight: bold;">${array[i]}</span>`;
         } else if (i === highlightJIndex) {
             res += `<span class="highlightArray" style="color: #00ced1; font-weight: bold;">${array[i]}</span>`;
@@ -656,7 +658,9 @@ function printArray(array, highlightIndex = -1, highlightJIndex = -1) {
             res += array[i];
         }
 
-        if (i === highlightIndex) {
+        if (i === highlightIndex && i === highlightJIndex) {
+            indicesRes += `<span class="highlightIndex" style="background: linear-gradient(to right, #98fb98 50%, #00ced1 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${i}</span>`;
+        } else if (i === highlightIndex) {
             indicesRes += `<span class="highlightIndex i-index">${i}</span>`;
         } else if (i === highlightJIndex) {
             indicesRes += `<span class="highlightIndex j-index">${i}</span>`;
