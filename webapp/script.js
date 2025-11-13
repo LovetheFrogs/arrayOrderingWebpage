@@ -1,6 +1,9 @@
 // Global variables
 let opt = -1; // To know which algorithm is active
 
+let loadIn = false;
+let fadeDuration = 200;
+
 const setArrayData = [5, -1, 8, 3, 7, 0, 4];
 let steps = [];
 let currStep = 0;
@@ -186,10 +189,20 @@ function showContent(index) {
     content.classList.remove('hidden');
 
     opt = index;
-    if (opt === 0) {
-        steps = insertionSort([...setArrayData]);
-        inserDirBtn.classList.add('active');
-        code.innerHTML = `
+
+    if (loadIn) {
+        code.classList.add('fade-out');
+    } else {
+        fadeDuration = 0;
+    }
+
+    setTimeout(() => {
+        let newHTML = '';
+
+        if (opt === 0) {
+            steps = insertionSort([...setArrayData]);
+            inserDirBtn.classList.add('active');
+            newHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
 <span id="line0"> BEGIN </span>
@@ -203,10 +216,10 @@ function showContent(index) {
 <span id="line7">     v[j+1] := aux; </span>
 <span id="line0"> END // FOR </span>
         </code></pre>`;
-    } else if (opt === 1) {
-        steps = bubbleSort([...setArrayData]);
-        intrDirBtn.classList.add('active');
-        code.innerHTML = `
+        } else if (opt === 1) {
+            steps = bubbleSort([...setArrayData]);
+            intrDirBtn.classList.add('active');
+            newHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
 <span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
@@ -219,10 +232,10 @@ function showContent(index) {
 <span id="line0">    END; {FOR} </span>
 <span id="line0"> END // FOR </span>
         </code></pre>`;
-    } else if (opt === 2) {
-        steps = selectionSort([...setArrayData]);
-        selDirBtn.classList.add('active');
-        code.innerHTML = `
+        } else if (opt === 2) {
+            steps = selectionSort([...setArrayData]);
+            selDirBtn.classList.add('active');
+            newHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
 <span id="line0"> BEGIN </span>
@@ -244,19 +257,39 @@ function showContent(index) {
 
         document.getElementById("auxLabel").textContent = "valMenor";
         document.getElementById("auxLabel").setAttribute("font-size", "24");
-    }
+        }
+        code.innerHTML = newHTML;
+
+        if (loadIn) {
+            void codeContainer.offsetWidth;
+            codeContainer.classList.remove('fade-out');
+
+            setTimeout(() => {
+                currLine = document.getElementById('line1');
+                if (currLine) currLine.classList.add('highlight');
+                lineIdx = 1;
+            }, 50);
+
+            code.classList.remove('fade-out');
+        }
+    }, fadeDuration);
 
     initialArrayData.innerText = printArray(setArrayData);
     operationsArrayData.innerText = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
 
-    currLine = document.getElementById('line1');
-    currLine.classList.add('highlight');
-    lineIdx = 1
-
     initialArrayData.innerHTML = printArray(setArrayData);
     operationsArrayData.innerHTML = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
+
+    if (!loadIn) {
+        fadeDuration = 200;
+        loadIn = true;
+        currLine = document.getElementById('line1');
+        currLine.classList.add('highlight');
+        lineIdx = 1;
+    }
+
 
     document.getElementById("bottomBar").classList.remove("hidden");
     document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
@@ -275,6 +308,8 @@ function showExplanation() {
     explanation.classList.remove('hidden');
     explanation.classList.add('positioning');
     document.getElementById("bottomBar").classList.add("hidden");
+
+    loadIn = false;
 
     if (opt === 0)  { // Insertion sort
         explanationBlock.innerHTML = `
@@ -360,8 +395,13 @@ pascalBtn.addEventListener('click', () => {
     document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
     document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
 
-    if (opt === 0) {
-        code.innerHTML = `
+    code.classList.add('fade-out');
+
+    setTimeout(() => {
+        let newHTML = '';
+
+        if (opt === 0) {
+            newHTML = `
             <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 1 TO ULTIMO DO </span>
 <span id="line0"> BEGIN </span>
@@ -375,8 +415,8 @@ pascalBtn.addEventListener('click', () => {
 <span id="line7">     v[j+1] := aux; </span>
 <span id="line0"> END // FOR </span>
         </code></pre>`;
-    } else if (opt === 1) {
-        code.innerHTML = `
+        } else if (opt === 1) {
+            newHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := 0 TO pred(ULTIMO) DO </span>
 <span id="line2">     FOR j := 0 TO ULTIMO - 1 - i DO </span>
@@ -389,8 +429,8 @@ pascalBtn.addEventListener('click', () => {
 <span id="line0">    END; {FOR} </span>
 <span id="line0"> END // FOR </span>
         </code></pre>`;
-    } else if (opt === 2) {
-        code.innerHTML = `
+        } else if (opt === 2) {
+            newHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1"> FOR i := PRIMERO TO pred(ULTIMO) DO </span>
 <span id="line0"> BEGIN </span>
@@ -409,15 +449,24 @@ pascalBtn.addEventListener('click', () => {
 <span id="line0">     END; {IF} </span>
 <span id="line0"> END; {FOR i} </span>
         </code></pre>`;
-    }
+        }
+        code.innerHTML = newHTML;
+
+        void codeContainer.offsetWidth;
+        codeContainer.classList.remove('fade-out');
+
+        setTimeout(() => {
+            currLine = document.getElementById('line1');
+            if (currLine) currLine.classList.add('highlight');
+            lineIdx = 1;
+        }, 50);
+
+        code.classList.remove('fade-out');
+    }, fadeDuration);
 
     initialArrayData.innerText = printArray(setArrayData);
     operationsArrayData.innerText = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
-
-    currLine = document.getElementById('line1');
-    currLine.classList.add('highlight');
-    lineIdx = 1
 });
 
 pythonBtn.addEventListener('click', () => {
@@ -433,8 +482,13 @@ pythonBtn.addEventListener('click', () => {
     document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
     document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
 
-    if (opt === 0) {
-        code.innerHTML = `<pre><code id="codeContentInsDir" class="code-block justify-content-center">
+    code.classList.add('fade-out');
+
+    setTimeout(() => {
+        let newHTML = '';
+
+        if (opt === 0) {
+            newHTML = `<pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1">for i in range(1, ULTIMO + 1):</span>
 <span id="line2">    aux = v[i]</span>
 <span id="line3">    j = i - 1</span>
@@ -443,8 +497,8 @@ pythonBtn.addEventListener('click', () => {
 <span id="line6">        j -= 1</span>
 <span id="line7">    v[j + 1] = aux</span>
         </code></pre>`;
-    } else if (opt === 1) {
-        code.innerHTML = `<pre><code id="codeContentIntDir" class="code-block justify-content-center">
+        } else if (opt === 1) {
+            newHTML = `<pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> for i in range(0, len(v) - 1): </span>
 <span id="line2">     for j in range(0, len(v) - 1 - i): </span>
 <span id="line3">         if v[j] &gt; v[j + 1]: </span>
@@ -452,8 +506,8 @@ pythonBtn.addEventListener('click', () => {
 <span id="line5">             v[j] = v[j + 1] </span>
 <span id="line6">             v[j + 1] = aux </span>
         </code></pre>`;
-    } else if (opt === 2) {
-        code.innerHTML = `
+        } else if (opt === 2) {
+            newHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1">for i in range(primero, ultimo): </span>
 <span id="line2">    val_menor = v[i] </span>
@@ -466,15 +520,24 @@ pythonBtn.addEventListener('click', () => {
 <span id="line9">        v[pos_menor] = v[i] </span>
 <span id="line10">        v[i] = val_menor </span>
         </code></pre>`;
-    }
+        }
+        code.innerHTML = newHTML;
+
+        void codeContainer.offsetWidth;
+        codeContainer.classList.remove('fade-out');
+
+        setTimeout(() => {
+            currLine = document.getElementById('line1');
+            if (currLine) currLine.classList.add('highlight');
+            lineIdx = 1;
+        }, 50);
+
+        code.classList.remove('fade-out');
+    }, fadeDuration);
 
     initialArrayData.innerText = printArray(setArrayData);
     operationsArrayData.innerText = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
-
-    currLine = document.getElementById('line1');
-    currLine.classList.add('highlight');
-    lineIdx = 1
 });
 
 cBtn.addEventListener('click', () => {
@@ -490,8 +553,13 @@ cBtn.addEventListener('click', () => {
     document.getElementById("jValueText").textContent = steps[currStep].jVal !== null ? steps[currStep].jVal : "\u200B";
     document.getElementById("auxValueText").textContent = steps[currStep].auxVal !== null ? steps[currStep].auxVal : "\u200B";
 
-    if (opt === 0) {
-        code.innerHTML = `
+    code.classList.add('fade-out');
+
+    setTimeout(() => {
+        let newHTML = '';
+
+        if (opt === 0) {
+            newHTML = `
         <pre><code id="codeContentInsDir" class="code-block justify-content-center">
 <span id="line1">for (int i = 1; i <= ULTIMO; i++) {</span>
 <span id="line2">    int aux = v[i];</span>
@@ -504,8 +572,8 @@ cBtn.addEventListener('click', () => {
 <span id="line7">    v[j + 1] = aux;</span>
 <span id="line0">}</span>
         </code></pre>`;
-    } else if (opt === 1) {
-        code.innerHTML = `
+        } else if (opt === 1) {
+            newHTML = `
         <pre><code id="codeContentIntDir" class="code-block justify-content-center">
 <span id="line1"> for (int i = 0; i &lt; ULTIMO; i++) { </span>
 <span id="line2">     for (int j = 0; j &lt; ULTIMO - 1 - i; j++) { </span>
@@ -517,8 +585,8 @@ cBtn.addEventListener('click', () => {
 <span id="line0">     } </span>
 <span id="line0"> } </span>
         </code></pre>`;
-    } else if (opt === 2) {
-        code.innerHTML = `
+        } else if (opt === 2) {
+            newHTML = `
         <pre><code id="codeContentSelDir" class="code-block justify-content-center">
 <span id="line1">for (int i = primero; i < ultimo; i++) { </span>
 <span id="line2">    int valMenor = v[i]; </span>
@@ -535,15 +603,24 @@ cBtn.addEventListener('click', () => {
 <span id="line0">    } </span>
 <span id="line0">} </span>
         </code></pre>`;
-    }
+        }
+        code.innerHTML = newHTML;
+
+        void codeContainer.offsetWidth;
+        codeContainer.classList.remove('fade-out');
+
+        setTimeout(() => {
+            currLine = document.getElementById('line1');
+            if (currLine) currLine.classList.add('highlight');
+            lineIdx = 1;
+        }, 50);
+
+        code.classList.remove('fade-out');
+    }, fadeDuration);
         
     initialArrayData.innerText = printArray(setArrayData);
     operationsArrayData.innerText = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
-
-    currLine = document.getElementById('line1');
-    currLine.classList.add('highlight');
-    lineIdx = 1
 });
 
 function animateStep(stepIndex) {

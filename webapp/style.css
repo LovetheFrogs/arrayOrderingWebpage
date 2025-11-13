@@ -621,3 +621,11 @@ button[disabeled] {
   opacity: 0;
   pointer-events: none;
 }
+
+#codeContainer {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 1;
+}
+#codeContainer.fade-out {
+  opacity: 0;
+}
