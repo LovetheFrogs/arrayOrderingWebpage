@@ -54,6 +54,8 @@ const inputError = document.getElementById('inputError');
 const confirmValuesBtn = document.getElementById('confirmValuesBtn');
 const cancelValuesBtn = document.getElementById('cancelValuesBtn');
 
+const disclaimer = document.getElementById('disclaimer');
+
 // Initialize modal as hidden
 if (addValuesModal) {
     addValuesModal.classList.add('hidden');
@@ -263,38 +265,27 @@ function showContent(index) {
         if (loadIn) {
             void codeContainer.offsetWidth;
             codeContainer.classList.remove('fade-out');
-
-            setTimeout(() => {
-                currLine = document.getElementById('line1');
-                if (currLine) currLine.classList.add('highlight');
-                lineIdx = 1;
-            }, 50);
-
             code.classList.remove('fade-out');
+        } else {
+            fadeDuration = 200;
+            loadIn = true;
         }
+        
+        setTimeout(() => {
+            currLine = document.getElementById('line1');
+            if (currLine) currLine.classList.add('highlight');
+            lineIdx = 1;
+            document.getElementById("bottomBar").classList.remove("hidden");
+            document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('progressPercent').innerText = '0%';
+        }, 50);
+        
     }, fadeDuration);
 
     initialArrayData.innerText = printArray(setArrayData);
     operationsArrayData.innerText = printArray(setArrayData);
     finalArrayData.innerText = "\u200B";
-
-    initialArrayData.innerHTML = printArray(setArrayData);
-    operationsArrayData.innerHTML = printArray(setArrayData);
-    finalArrayData.innerText = "\u200B";
-
-    if (!loadIn) {
-        fadeDuration = 200;
-        loadIn = true;
-        currLine = document.getElementById('line1');
-        currLine.classList.add('highlight');
-        lineIdx = 1;
-    }
-
-
-    document.getElementById("bottomBar").classList.remove("hidden");
-    document.getElementById("stepCounter").innerText = `Paso 0/${steps.length - 1}`;
-    document.getElementById('progressFill').style.width = '0%';
-    document.getElementById('progressPercent').innerText = '0%';
 }
 
 // Algorithm selection functionality
@@ -789,6 +780,10 @@ function clearMainArea() {
     langButtons.forEach(btn => btn.classList.remove('active-btn'));
     langTabs.classList.add('hidden');
     content.classList.add('hidden');
+
+    if (!disclaimer.classList.contains('hidden')) {
+        disclaimer.classList.add('hidden');
+    }
 
     if (explanation.classList.contains('hidden') === false) {
         explanationBlock.innerHTML = "";
