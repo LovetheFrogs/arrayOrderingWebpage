@@ -629,3 +629,64 @@ button[disabeled] {
 #codeContainer.fade-out {
   opacity: 0;
 }
+
+/* Disclaimer styles */
+.disclaimer-container {
+  background-color: #787878;
+  border-radius: 3vmin;
+  margin: 2vmin;
+  padding: 2.5vmin;
+}
+
+.disclaimer-content {
+  text-align: center;
+}
+
+.disclaimer-title {
+  font-size: 2.5vmin;
+  color: #f2f1ef;
+  margin-bottom: 1.5vmin;
+  font-weight: bold;
+}
+
+.disclaimer-text {
+  font-size: 1.8vmin;
+  color: #f2f1ef;
+  line-height: 1.6;
+  margin-bottom: 1vmin;
+}
+
+.cc-link {
+  color: #98fb98;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.cc-link:hover {
+  color: #7ce37c;
+  text-decoration: underline;
+}
+
+.contact-info {
+  margin-top: 2vmin;
+  padding-top: 1.5vmin;
+  border-top: 2px solid #5c5c5c;
+}
+
+.contact-link {
+  color: #00ced1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+  color: #00a8b0;
+  text-decoration: underline;
+}
+
+.hosted-text {
+  margin-top: 1vmin;
+  font-style: italic;
+  color: #f2f1ef;
+}
