@@ -638,8 +638,36 @@ button[disabeled] {
   padding: 2.5vmin;
 }
 
+.hosted-text {
+  margin-top: 1vmin;
+  font-style: italic;
+  color: #f2f1ef;
+}
+
 .disclaimer-content {
   text-align: center;
+}
+
+.welcome-title {
+  font-size: 3.5vmin;
+  color: #98fb98;
+  margin-bottom: 2vmin;
+  font-weight: bold;
+}
+
+.about-text {
+  font-size: 2vmin;
+  margin-bottom: 1.2vmin;
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #5c5c5c, transparent);
+  margin: 3vmin 0;
 }
 
 .disclaimer-title {
@@ -671,7 +699,6 @@ button[disabeled] {
 .contact-info {
   margin-top: 2vmin;
   padding-top: 1.5vmin;
-  border-top: 2px solid #5c5c5c;
 }
 
 .contact-link {
@@ -683,10 +710,4 @@ button[disabeled] {
 .contact-link:hover {
   color: #00a8b0;
   text-decoration: underline;
-}
-
-.hosted-text {
-  margin-top: 1vmin;
-  font-style: italic;
-  color: #f2f1ef;
 }
